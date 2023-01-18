@@ -38,8 +38,34 @@ public class BotTank extends GameObject {
         g2d.drawImage(img, (int) (x - img.getWidth() * 0.5), (int) (y - img.getHeight() * 0.5), null);
     }
     public void UpdatePlace() {
-        x+=0.1;
+
+    }
+    public int[] getTankX() {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        double s = Math.sin(Math.toRadians(angle));
+        double c = Math.cos(Math.toRadians(angle));
+        int[] TankX = new int[]{
+                (int) (x + w * 0.5 * c + h * 0.5 * s),
+                (int) (x - w * 0.5 * c + h * 0.5 * s),
+                (int) (x - w * 0.5 * c - h * 0.5 * s),
+                (int) (x + w * 0.5 * c - h * 0.5 * s)};
+        return TankX;
+    }
+
+    public int[] getTankY() {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        double s = Math.sin(Math.toRadians(angle));
+        double c = Math.cos(Math.toRadians(angle));
+        int[] TankY = new int[]{
+                (int) (y + w * 0.5 * s - h * 0.5 * c),
+                (int) (y - w * 0.5 * s - h * 0.5 * c),
+                (int) (y - w * 0.5 * s + h * 0.5 * c),
+                (int) (y + w * 0.5 * s + h * 0.5 * c),
+        };        // тут может быть лажа
+        return TankY;
     }
 
 
-    }
+}

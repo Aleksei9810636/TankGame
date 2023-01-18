@@ -125,7 +125,7 @@ public class Tank extends GameObject {
 
     public int[] getTankX() {
         int w = image.getWidth();
-        int h = image.getWidth();
+        int h = image.getHeight();
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
         int[] TankX = new int[]{
@@ -138,7 +138,7 @@ public class Tank extends GameObject {
 
     public int[] getTankY() {
         int w = image.getWidth();
-        int h = image.getWidth();
+        int h = image.getHeight();
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
         int[] TankY = new int[]{
@@ -152,7 +152,7 @@ public class Tank extends GameObject {
 
     public int[] getTankX(int a, int b) {
         int w = image.getWidth();
-        int h = image.getWidth();
+        int h = image.getHeight();
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
         int[] TankX = new int[2];

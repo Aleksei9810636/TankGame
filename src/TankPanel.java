@@ -194,22 +194,20 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
 
 
-    public void updateCollisions(Graphics g){
-        int[] Tank1X= tank1.getTankX();
-        int[] Tank1Y= tank1.getTankY();
+    public void updateCollisions(Graphics g) {
+        int[] Tank1X = tank1.getTankX();
+        int[] Tank1Y = tank1.getTankY();
 
-        int[] Tank2X= tank2.getTankX();
-        int[] Tank2Y= tank2.getTankY();
+        int[] Tank2X = tank2.getTankX();
+        int[] Tank2Y = tank2.getTankY();
         g.setColor(new Color(252, 252, 252));            // это центр
-        g.fillOval((int)(tank1.x-1),(int) (tank1.y-1), 2, 2);
+        g.fillOval((int) (tank1.x - 1), (int) (tank1.y - 1), 2, 2);
 
 
+        Polygon P_tank1 = new Polygon(Tank1X, Tank1Y, 4);
+        Polygon P_tank2 = new Polygon(Tank2X, Tank2Y, 4);
 
-
-        Polygon P_tank1=new Polygon(Tank1X, Tank1Y, 4);
-        Polygon P_tank2=new Polygon(Tank2X, Tank2Y, 4);
-
-        for(int i=0; i<walls.size(); i++) {
+        for (int i = 0; i < walls.size(); i++) {
             Wall wall = walls.get(i);
 
 
@@ -247,8 +245,30 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 g.setColor(new Color(55, 250, 31, 255));
                 g.fillRect(10, 10, 1200, 20);
             }
+
+            for (int j = 0; j < BotTanks.size(); j++) {                                                               // пересечение ботиков со стенкой
+                Polygon P_botTank = new Polygon(BotTanks.get(j).getTankX(), BotTanks.get(j).getTankY(), 4);
+
+                if (P_botTank.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
+
+                    if (P_botTank.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
+                        this.BotTanks.get(j).y += Math.abs(this.tank1.vy) + 1;
+                    }
+                    if (P_botTank.intersects(wall.x, wall.y, 1, wall.height)) {
+                        this.BotTanks.get(j).x -= Math.abs(this.tank1.vy) + 1;
+                    }
+                    if (P_botTank.intersects(wall.x, wall.y, wall.width, 1)) {
+                        this.BotTanks.get(j).y -= Math.abs(this.tank1.vy) + 1;
+                    }
+                    if (P_botTank.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
+                        this.BotTanks.get(j).x += Math.abs(this.tank1.vy) + 1;
+                    }
+                }
+            }
+            }
+
         }
-        }
+
 
     public void GunAngle(){                                             ////// not tank2
         double Angle1=MouseX- tank1.x;
