@@ -13,8 +13,6 @@ public class Main {
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
         long StartTime;
         StartTime=System.currentTimeMillis();
-        System.out.println(StartTime);
-
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
         Tank tank1=new Tank(1800,300, 1,  0.05, 900, 50, 5);

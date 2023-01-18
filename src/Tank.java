@@ -25,7 +25,6 @@ public class Tank extends GameObject {
     boolean typeOfEventS;
     boolean typeOfEventD;
     boolean typeOfEventCheat = false;
-    boolean TypeOfEventAutopilot = false;
 
     public Tank(double x, double y, double VMax, double a, double HitPoints, double laja, double RechargeTime) throws IOException {
         this.x = x;
@@ -122,14 +121,6 @@ public class Tank extends GameObject {
         }
     }
 
-//    public void Autopilot(){
-//        if(TypeOfEventAutopilot){
-//
-//
-//
-//
-//        }
-//    }
 
 
     public int[] getTankX() {
