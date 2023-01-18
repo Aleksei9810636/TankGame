@@ -1,9 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,6 +19,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     double MouseY;
     ArrayList<Bullet> bullets= new ArrayList<>();
     ArrayList<Wall> walls;
+    ArrayList<BotTank> BotTanks= new ArrayList<>();
+    int sumBotTank=0;
     long StartTime;
     long time;
 
@@ -173,9 +178,22 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         return false;
     }
 
-    public  void UPTime(){
+    public  void UPTime(Graphics g){
         time=System.currentTimeMillis()-StartTime;
+        g.drawString(Integer.toString((int)(time/1000)), 800,100);
+
     }
+    public void BotControl( Tank tank1,Tank tank2,ArrayList<Wall> walls) throws IOException {
+        if(time>3000&& sumBotTank<1) {
+            BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
+            BotTank botTank1 = new BotTank(111, 111, 1, 0.05, 900, 1, image);
+            BotTanks.add(0, botTank1);
+            sumBotTank++;
+        }
+    }
+
+
+
     public void updateCollisions(Graphics g){
         int[] Tank1X= tank1.getTankX();
         int[] Tank1Y= tank1.getTankY();
@@ -304,7 +322,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        UPTime();
+        UPTime(g);
+        // это вставила джава
+        try {
+            BotControl(tank1, tank2, walls);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //
         updateCollisions(g);
         GunAngle();
         tank1.UpdatePlace();
@@ -324,6 +349,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         for(int i=0; i<walls.size();i++){
             walls.get(i).paint(g);
+        }
+        for(int i=0;i<BotTanks.size();i++){
+            BotTanks.get(i).UpdatePlace();
+            BotTanks.get(i).paint(g);
         }
         g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
 

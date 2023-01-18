@@ -22,23 +22,23 @@ public class BotTank extends GameObject {
     boolean typeOfEventS;
     boolean typeOfEventD;
 
-    public BotTank(double x, double y, double VAngle, double vy, double VMax, double a, double angle, double hitPoints, double hitPointsMax, double rechargeTime, long lastShotTime, BufferedImage image) {
+    public BotTank(double x, double y, double VMax, double a, double hitPointsMax, double rechargeTime, BufferedImage image) {
         this.x = x;
         this.y = y;
-        this.VAngle = VAngle;
-        this.vy = vy;
         this.VMax = VMax;
         this.a = a;
-        HitPoints = hitPoints;
+        HitPoints = hitPointsMax;
         HitPointsMax = hitPointsMax;
         RechargeTime = rechargeTime;
-        LastShotTime = lastShotTime;
         this.image = image;
     }
     public void paint(Graphics g) {
         BufferedImage img = rotateImage(image, angle);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, (int) (x - img.getWidth() * 0.5), (int) (y - img.getHeight() * 0.5), null);
+    }
+    public void UpdatePlace() {
+        x+=0.1;
     }
 
 
