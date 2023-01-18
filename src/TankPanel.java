@@ -12,15 +12,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     Tank tank2;
     Gun gun1;
     KeyBoardGun keyBoardGun;
-    boolean Push;
     double MouseX;
     double MouseY;
-    Bullet bullet;
     ArrayList<Bullet> bullets= new ArrayList<>();
-    ArrayList<Wall> walls=new ArrayList<>();
+    ArrayList<Wall> walls;
+    long StartTime;
     long time;
 
-    public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun ) throws IOException {       //Это вероятно не надо
+    public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun, long StartTime ) throws IOException {       //Это вероятно не надо
         this.tank1 = tank1;
         this.gun1 =gun;
         this.tank2 = tank2;
@@ -28,7 +27,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.walls=walls;
         addMouseListener(this);
         addMouseMotionListener(this);
+        this.StartTime=StartTime;
     }
+
 
     //  Далее управление клавиатурой и мышкой
 
@@ -37,7 +38,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     @Override
     public void mouseClicked(MouseEvent e) {              // на отпускание
-//        System.out.println("mouseClicked");
     }
 
     @Override
@@ -88,7 +88,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
 
         if (e.getID() == KeyEvent.KEY_PRESSED) {
-            System.out.println(e.getKeyCode());
+//            System.out.println(e.getKeyCode());
             if (e.getKeyCode() == 39) {
                 if ((System.currentTimeMillis() - tank2.LastShotTime) * 0.001 > tank2.RechargeTime) {
                     tank2.LastShotTime = System.currentTimeMillis();
@@ -173,13 +173,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         return false;
     }
 
-
-
-
-
-
-
-
+    public  void UPTime(){
+        time=System.currentTimeMillis()-StartTime;
+    }
     public void updateCollisions(Graphics g){
         int[] Tank1X= tank1.getTankX();
         int[] Tank1Y= tank1.getTankY();
@@ -308,6 +304,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        UPTime();
         updateCollisions(g);
         GunAngle();
         tank1.UpdatePlace();

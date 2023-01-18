@@ -11,6 +11,9 @@ public class Main {
     public static void main(String[] args) throws IOException{
         BufferedImage SteelBox= ImageIO.read(new File("imgs\\SteelBox.jpg"));
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
+        long StartTime;
+        StartTime=System.currentTimeMillis();
+        System.out.println(StartTime);
 
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
@@ -19,22 +22,20 @@ public class Main {
         Gun gun=new Gun(0.2);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.2);
         ArrayList<Wall> walls=new ArrayList<>();
-        Wall wall1=new Wall(100, 100, 100, 200,WoodBox, 300);
-        Wall wall6=new Wall(450, 400, 100, 150, WoodBox, 300);
+        Wall wall1=new Wall(1000, 100, 100, 200,WoodBox, 300);
+        Wall wall6=new Wall(1000, 600, 100, 200, WoodBox, 300);
 
         walls.add(wall1);
         walls.add(wall6);
-
-
         // Создаем окно
         JFrame frame = new JFrame();
-        TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun);
+        TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
         frame.add(tankPanel);        // добавляем в окно панель
         frame.setSize(1900,1000);
         frame.setVisible(true);
         Wall wall2=new Wall(0,0, frame.getWidth(), 50, SteelBox, 100000);
         Wall wall3=new Wall(frame.getWidth()-50,0,50, frame.getHeight(), SteelBox, 100000);
-        Wall wall4=new Wall(0,frame.getHeight()-50,frame.getWidth()-50, 50, SteelBox, 100000);
+        Wall wall4=new Wall(0,frame.getHeight()-90,frame.getWidth()-50, 50, SteelBox, 100000);
         Wall wall5=new Wall(-60,0,50, 1000, SteelBox, 100000);
         walls.add(wall2);
         walls.add(wall3);
