@@ -20,6 +20,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     ArrayList<Bullet> bullets= new ArrayList<>();
     ArrayList<Wall> walls;
     ArrayList<BotTank> BotTanks= new ArrayList<>();
+    ArrayList<BotGun> BotGuns= new ArrayList<BotGun>();
     int sumBotTank=0;
     long StartTime;
     long time;
@@ -184,10 +185,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     }
     public void BotControl( Tank tank1,Tank tank2,ArrayList<Wall> walls) throws IOException {
-        if(time>3000&& sumBotTank<1) {
+        if(time>1000&& sumBotTank<2) {
             BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
-            BotTank botTank1 = new BotTank(111, 111, 1, 0.05, 900, 1, image);
-            BotTanks.add(0, botTank1);
+            BotTank botTank1 = new BotTank(111, 111*sumBotTank+500, 1, 0.05, 900, 1, image, tank1, tank2);
+            BotTanks.add(sumBotTank, botTank1);
+            BotGun botGun= new BotGun(0.2, tank1, tank2);
+            BotGuns.add(sumBotTank, botGun);
             sumBotTank++;
         }
     }
@@ -373,7 +376,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for(int i=0;i<BotTanks.size();i++){
             BotTanks.get(i).UpdatePlace();
             BotTanks.get(i).paint(g);
+            BotGuns.get(i).UpdatePlace();
+            BotGuns.get(i).paint(g,BotTanks.get(i).x,BotTanks.get(i).y );
         }
+
         g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
 
 

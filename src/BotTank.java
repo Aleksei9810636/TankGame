@@ -21,8 +21,11 @@ public class BotTank extends GameObject {
     boolean typeOfEventA;
     boolean typeOfEventS;
     boolean typeOfEventD;
+    Tank tank1;
+    Tank tank2;
 
-    public BotTank(double x, double y, double VMax, double a, double hitPointsMax, double rechargeTime, BufferedImage image) {
+    public BotTank(double x, double y, double VMax, double a, double hitPointsMax,
+                   double rechargeTime, BufferedImage image, Tank tank1, Tank tank2) {
         this.x = x;
         this.y = y;
         this.VMax = VMax;
@@ -31,6 +34,8 @@ public class BotTank extends GameObject {
         HitPointsMax = hitPointsMax;
         RechargeTime = rechargeTime;
         this.image = image;
+        this.tank1=tank1;
+        this.tank2=tank2;
     }
     public void paint(Graphics g) {
         BufferedImage img = rotateImage(image, angle);
