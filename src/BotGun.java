@@ -16,6 +16,7 @@ import java.io.IOException;
         Tank tank2;
         BufferedImage image = ImageIO.read(new File("imgs\\gun.png"));
 
+
         public BotGun(double AbcVAngle, Tank tank1, Tank tank2) throws IOException {
             this.AbcVAngle = AbcVAngle;
             this.tank1=tank1;
@@ -25,13 +26,11 @@ import java.io.IOException;
         public void paint(Graphics g, double x, double y) {
             BufferedImage img = rotateImage(image, Angle);
             g.drawImage(img, (int) (x - img.getWidth() * 0.5), (int) (y - img.getHeight() * 0.5), null);
+            this.x=x;
+            this.y=y;
         }
         public void DirectionAngle(){
-            DirectionAngle=Math.toDegrees(Math.atan2((tank1.y-y),(tank1.x-x)));
-//            System.out.println(Math.atan2((tank1.y-y),(tank1.x-x)));
-//            System.out.println(DirectionAngle);
-//            System.out.println((tank1.y-y));
-            System.out.println(y);
+            DirectionAngle=90+Math.toDegrees(Math.atan2((tank1.y-y),(tank1.x-x)));
         }
 
         public void UpdatePlace() {

@@ -189,8 +189,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
             BotTank botTank1 = new BotTank(111, 111*sumBotTank+500, 1, 0.05, 900, 1, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
-            BotGun botGun= new BotGun(0.2, tank1, tank2);
-            BotGuns.add(sumBotTank, botGun);
+//            BotGun botGun1= new BotGun(0.2, tank1, tank2);
+//            BotGuns.add(sumBotTank, botGun1);
             sumBotTank++;
         }
     }
@@ -285,7 +285,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         gun1.TankVAngle=tank1.VAngle;
 
     }
-    public void BulletList(Graphics g){
+    public void BulletList(Graphics g){                 ////////////////////// это со стенками
         for(Bullet bullet : bullets){ //bullets.get(i) = bullet
             bullet.paint(g);
             bullet.update();
@@ -337,9 +337,25 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank == 1) {                   // отстойненько т.к. размер пули не читается
                 this.tank2.HitPoints -= bullets.get(i).Damage;
                 bullets.remove(i);
+                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                    break;
+                } else {
+                    i -= 1;
+                }
+            }
+            for(int s = 0; s< BotTanks.size(); s++ ){
+                Polygon P_botTank = new Polygon(BotTanks.get(s).getTankX(),BotTanks.get(s).getTankY(), 4);
+                if (P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) &&( bullets.get(i).IndicationTank == 1 || bullets.get(i).IndicationTank == 2)) {                   // отстойненько т.к. размер пули не читается
+                    BotTanks.get(s).HitPoints -= bullets.get(i).Damage;
+                    bullets.remove(i);
+                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                    break;
+                } else {
+                    i -= 1;
+                }
             }
         }
-    }
+    }}
 
 
     @Override
@@ -376,8 +392,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for(int i=0;i<BotTanks.size();i++){
             BotTanks.get(i).UpdatePlace();
             BotTanks.get(i).paint(g);
-            BotGuns.get(i).UpdatePlace();
-            BotGuns.get(i).paint(g,BotTanks.get(i).x,BotTanks.get(i).y );
+//            BotGuns.get(i).UpdatePlace();
+//            BotGuns.get(i).paint(g,BotTanks.get(i).x,BotTanks.get(i).y );
+//            System.out.println(BotTanks.size());
+//            System.out.println(BotGuns.size());
+
         }
 
         g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
