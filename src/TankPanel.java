@@ -34,7 +34,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         addMouseListener(this);
         addMouseMotionListener(this);
         this.StartTime=StartTime;
+        System.nanoTime();
     }
+
 
 
     //  Далее управление клавиатурой и мышкой
