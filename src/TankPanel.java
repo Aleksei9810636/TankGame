@@ -189,12 +189,21 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     public void BotControl( Tank tank1,Tank tank2,ArrayList<Wall> walls) throws IOException {
         if(time>1000&& sumBotTank<2) {
             BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
-            BotTank botTank1 = new BotTank(111, 111*sumBotTank+500, 1, 0.05, 900, 1, image, tank1, tank2);
+            BotTank botTank1 = new BotTank(-90, 111*sumBotTank+400, 0.3, 0.05, 900, 3, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, tank1, tank2);
 //            BotGuns.add(sumBotTank, botGun1);
             sumBotTank++;
         }
+        for(int i = 0; i<BotTanks.size(); i++){
+            BotTank botTank=BotTanks.get(i);
+            if(botTank.botGun.typeOfEventFire   &&      (((System.currentTimeMillis() - botTank.LastShotTime) * 0.001) % 1000) > botTank.RechargeTime){
+                botTank.LastShotTime=System.currentTimeMillis();
+                Bullet bullet = new Bullet(botTank.x, botTank.y, botTank.botGun.Angle, 11);
+                bullets.add(bullet);
+            }
+        }
+
     }
 
 
@@ -287,7 +296,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         gun1.TankVAngle=tank1.VAngle;
 
     }
-    public void BulletList(Graphics g){                 ////////////////////// это со стенками
+    public void BulletList(Graphics g){                             ////////////////////// это со стенками
         for(Bullet bullet : bullets){ //bullets.get(i) = bullet
             bullet.paint(g);
             bullet.update();
@@ -306,7 +315,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     (int)(wall.y+wall.height) };
             Polygon P_wall=new Polygon(WallX, WallY, 4);
             for(int k = 0; k<bullets.size(); k++){
-                if((P_wall.intersects(bullets.get(k).x, bullets.get(k).y, 10, 10))){       ///////////////////////////////////////////////////////////////////////////////
+                if((P_wall.intersects(bullets.get(k).x, bullets.get(k).y, 10, 10))){
                     bullets.remove(k);
                     --k;
                 }
@@ -323,7 +332,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         Polygon P_tank1 = new Polygon(Tank1X, Tank1Y, 4);
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet=bullets.get(i);
-            if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank == 2) {
+            if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
                 if(!tank1.typeOfEventCheat) {
                     this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
                     bullets.remove(i);
@@ -336,7 +345,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     i -= 1;
                 }
             }
-            if (P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank == 1) {                   // отстойненько т.к. размер пули не читается
+            if (P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
                 this.tank2.HitPoints -= bullets.get(i).Damage;
                 bullets.remove(i);
                 if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
@@ -347,9 +356,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             }
             for(int s = 0; s< BotTanks.size(); s++ ){
                 Polygon P_botTank = new Polygon(BotTanks.get(s).getTankX(),BotTanks.get(s).getTankY(), 4);
-                if (P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) &&( bullets.get(i).IndicationTank == 1 || bullets.get(i).IndicationTank == 2)) {                   // отстойненько т.к. размер пули не читается
+                if (P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) &&( bullets.get(i).IndicationTank !=11)) {                   // отстойненько т.к. размер пули не читается
                     BotTanks.get(s).HitPoints -= bullets.get(i).Damage;
                     bullets.remove(i);
+                    if(BotTanks.get(s).HitPoints<=0){
+                        BotTanks.remove(s);
+                        s-=1;
+                        sumBotTank-=1;
+                    }
                 if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
                     break;
                 } else {

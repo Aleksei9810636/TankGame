@@ -47,11 +47,10 @@ public class BotTank extends GameObject {
         g2d.drawImage(img, (int) (x - img.getWidth() * 0.5), (int) (y - img.getHeight() * 0.5), null);
         botGun.paint(g,x,y);
         botGun.UpdatePlace();
-        System.out.println(HitPoints);
+        g.drawString(Integer.toString((int)HitPoints),(int) x,(int) y-40);
     }
     public void UPPlace(){
         typeOfEventW=true;
-
     }
 
     public void UpdatePlace() {

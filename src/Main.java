@@ -34,7 +34,7 @@ public class Main {
         Wall wall2=new Wall(0,0, frame.getWidth(), 50, SteelBox, 100000);
         Wall wall3=new Wall(frame.getWidth()-50,0,50, frame.getHeight(), SteelBox, 100000);
         Wall wall4=new Wall(0,frame.getHeight()-90,frame.getWidth()-50, 50, SteelBox, 100000);
-        Wall wall5=new Wall(-60,0,50, 1000, SteelBox, 100000);
+        Wall wall5=new Wall(-200,0,50, 10000, SteelBox, 100000);
         walls.add(wall2);
         walls.add(wall3);
         walls.add(wall4);
@@ -46,7 +46,6 @@ public class Main {
 
         while (true) {
             frame.repaint();
-
         }
 
 

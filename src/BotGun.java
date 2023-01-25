@@ -12,6 +12,7 @@ import java.io.IOException;
         double Angle = 90;
         double DirectionAngle;
         double TankVAngle;
+        boolean typeOfEventFire=false;
         Tank tank1;
         Tank tank2;
         BufferedImage image = ImageIO.read(new File("imgs\\gun.png"));
@@ -29,12 +30,23 @@ import java.io.IOException;
             this.x=x;
             this.y=y;
         }
-        public void DirectionAngle(){
-            DirectionAngle=90+Math.toDegrees(Math.atan2((tank1.y-y),(tank1.x-x)));
+        public void control(){
+            double skylineAngle=Math.toDegrees(Math.atan2((tank1.y-y),(tank1.x-x)));
+            skylineAngle+=90;                                                                  // очень сложно. я запутался. с.о. отсчета угла
+            if(skylineAngle<0){
+                skylineAngle+=360;
+            }
+            DirectionAngle=skylineAngle;
+
+            typeOfEventFire=false;
+            if(Math.abs(DirectionAngle-Angle)<10 ){
+                typeOfEventFire=true;
+            }
+
         }
 
         public void UpdatePlace() {
-            DirectionAngle();
+            control();
             VAngle += TankVAngle;
             Angle += VAngle;
             if (DirectionAngle > Angle) {
