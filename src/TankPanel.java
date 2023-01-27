@@ -18,7 +18,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     double MouseX;
     double MouseY;
     ArrayList<Bullet> bullets= new ArrayList<>();
-    ArrayList<Wall> walls;
+    ArrayList<Wall> walls=new ArrayList<>();
+    ArrayList<Wall> Startwalls;
     ArrayList<BotTank> BotTanks= new ArrayList<>();
     ArrayList<BotGun> BotGuns= new ArrayList<BotGun>();
     int sumBotTank=0;
@@ -30,11 +31,28 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.gun1 =gun;
         this.tank2 = tank2;
         this.keyBoardGun=keyBoardGun;
-        this.walls=walls;
+        this.Startwalls=walls;
+        WallsDifferentiation();
         addMouseListener(this);
         addMouseMotionListener(this);
         this.StartTime=StartTime;
         System.nanoTime();
+    }
+    public void WallsDifferentiation() throws IOException {
+        for(int i=0; i<Startwalls.size(); i++){
+            Wall startwall=Startwalls.get(i);
+            int UnitX=startwall.width/ startwall.SizeBoxX;
+            int UnitY=startwall.height/ startwall.SizeBoxY;
+            startwall.width =UnitX * startwall.SizeBoxX;
+            startwall.height=UnitY * startwall.SizeBoxY;
+            for(int a=0; a<UnitX; a++){
+                for(int b=0; b<UnitY; b++){
+                    Wall wall=new Wall(startwall.x+a*startwall.SizeBoxX ,startwall.y+b*startwall.SizeBoxY,
+                            startwall.SizeBoxX,startwall.SizeBoxY,startwall.image, (int)startwall.BoxHP );
+                    walls.add(wall);
+                }
+            }
+        }
     }
 
 
@@ -187,9 +205,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     }
     public void BotControl( Tank tank1,Tank tank2,ArrayList<Wall> walls) throws IOException {
-        if(time>1000&& sumBotTank<2) {
+        if(time>10000&& sumBotTank<2) {
             BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
-            BotTank botTank1 = new BotTank(-90, 111*sumBotTank+400, 0.3, 0.05, 900, 3, image, tank1, tank2);
+            BotTank botTank1 = new BotTank(-90, 111*sumBotTank+400, 0.3, 0.05, 900, 1, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, tank1, tank2);
 //            BotGuns.add(sumBotTank, botGun1);
@@ -321,8 +339,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 }
             }
         }
-
     }
+
     public void HitCheck() {
         int[] Tank1X = tank1.getTankX();
         int[] Tank1Y = tank1.getTankY();
