@@ -14,7 +14,7 @@ public class Wall {
     int UnitX;
     int UnitY;
     int SizeBoxX=50;
-    int SizeBoxY=10;
+    int SizeBoxY=50;
     double BoxHP;
     Rectangle2D rectangle = new Rectangle2D.Double();
     BufferedImage image;
@@ -44,7 +44,7 @@ public class Wall {
 //                g.drawImage(image, x+SizeBox*b, y+SizeBox*a,x+SizeBox*(b+1), y+SizeBox*(a+1),0,0, image.getWidth(), image.getHeight(), null);
 //            }
 //        }
-        g.drawImage(image, x, y, null);
+        g.drawImage(image, x, y, x+SizeBoxX, y+SizeBoxY,0,0, image.getWidth(), image.getHeight(), null);
     }
 
 }

@@ -14,6 +14,10 @@ public class Main {
         long StartTime;
         StartTime=System.currentTimeMillis();
 
+        Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
+        int vert = sSize.height;
+        int hor  = sSize.width;
+
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
         Tank tank1=new Tank(1800,300, 1,  0.05, 900, 50, 5);
         Tank tank2=new Tank(1800, 500, 1, 0.05, 900, 1050, 2);
@@ -22,23 +26,22 @@ public class Main {
         ArrayList<Wall> walls=new ArrayList<>();
         Wall wall1=new Wall(1000, 100, 100, 200,WoodBox, 300);
         Wall wall6=new Wall(1000, 600, 100, 200, WoodBox, 300);
+        Wall wall2=new Wall(0,0, hor, 51, SteelBox, 100000);        // края
+//        Wall wall3=new Wall(hor-51, )
 
         walls.add(wall1);
+        walls.add(wall2);
+//        walls.add(wall3);
+//        walls.add(wall4);
+//        walls.add(wall5);
         walls.add(wall6);
         // Создаем окно
         JFrame frame = new JFrame();
         TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
         frame.add(tankPanel);        // добавляем в окно панель
-        frame.setSize(1900,1000);
+        frame.setSize(hor,vert-50);
         frame.setVisible(true);
-        Wall wall2=new Wall(0,0, frame.getWidth(), 50, SteelBox, 100000);
-        Wall wall3=new Wall(frame.getWidth()-50,0,50, frame.getHeight(), SteelBox, 100000);
-        Wall wall4=new Wall(0,frame.getHeight()-90,frame.getWidth()-50, 50, SteelBox, 100000);
-        Wall wall5=new Wall(-200,0,50, 10000, SteelBox, 100000);
-        walls.add(wall2);
-        walls.add(wall3);
-        walls.add(wall4);
-        walls.add(wall5);
+
 
 
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();   // менеджер по трудоустройству слушателей клавиатуры
