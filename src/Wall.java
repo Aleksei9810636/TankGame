@@ -26,25 +26,12 @@ public class Wall {
         this.width = width;
         this.height = height;
         rectangle.setRect(x, y, width, height);
-//        UpdateHeightAndWidth();
         this.image = image;
         this.BoxHP=BoxHP;
     }
 
-//    public void UpdateHeightAndWidth(){
-//        UnitX=width/ SizeBoxX;
-//        UnitY=height/ SizeBoxY;
-//        width =UnitX * SizeBoxX;
-//        height=UnitY * SizeBoxY;
-//    }
-
     public void paint(Graphics g) {
-//        for(int a=0; a<UnitY; a++){                    // a это по игрику  b это по иксу
-//            for(int b=0; b<UnitX; b++){
-//                g.drawImage(image, x+SizeBox*b, y+SizeBox*a,x+SizeBox*(b+1), y+SizeBox*(a+1),0,0, image.getWidth(), image.getHeight(), null);
-//            }
-//        }
-        g.drawImage(image, x, y, x+SizeBoxX, y+SizeBoxY,0,0, image.getWidth(), image.getHeight(), null);
+        g.drawImage(image, x, y, x+SizeBoxX, y+SizeBoxY,0,0, image.getWidth(), image.getHeight(),null);
     }
 
 }

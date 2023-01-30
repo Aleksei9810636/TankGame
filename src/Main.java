@@ -15,7 +15,7 @@ public class Main {
         StartTime=System.currentTimeMillis();
 
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
-        int vert = sSize.height;
+        int vert = sSize.height-50;
         int hor  = sSize.width;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
@@ -27,19 +27,21 @@ public class Main {
         Wall wall1=new Wall(1000, 100, 100, 200,WoodBox, 300);
         Wall wall6=new Wall(1000, 600, 100, 200, WoodBox, 300);
         Wall wall2=new Wall(0,0, hor, 51, SteelBox, 100000);        // края
-//        Wall wall3=new Wall(hor-51, )
+        Wall wall3=new Wall(hor-51,0,51,vert,SteelBox, 100000 );
+        Wall wall4=new Wall(0,vert-86, hor, 51, SteelBox,10000);
+        Wall wall5=new Wall(-300, -200, 51, vert+200, SteelBox, 100000 );
 
         walls.add(wall1);
         walls.add(wall2);
-//        walls.add(wall3);
-//        walls.add(wall4);
-//        walls.add(wall5);
+        walls.add(wall3);
+        walls.add(wall4);
+        walls.add(wall5);
         walls.add(wall6);
         // Создаем окно
         JFrame frame = new JFrame();
         TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
         frame.add(tankPanel);        // добавляем в окно панель
-        frame.setSize(hor,vert-50);
+        frame.setSize(hor,vert);
         frame.setVisible(true);
 
 

@@ -334,6 +334,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             Polygon P_wall=new Polygon(WallX, WallY, 4);
             for(int k = 0; k<bullets.size(); k++){
                 if((P_wall.intersects(bullets.get(k).x, bullets.get(k).y, 10, 10))){
+                    wall.BoxHP-=bullets.get(k).Damage;
+                    if(wall.BoxHP<=0){
+                        walls.remove(i);
+                        --i;
+                    }
                     bullets.remove(k);
                     --k;
                 }
