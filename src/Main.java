@@ -4,15 +4,24 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) throws IOException{
         BufferedImage SteelBox= ImageIO.read(new File("imgs\\SteelBox.jpg"));
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
+        Scanner scanner = new Scanner(new File("src\\Time.txt"));
+        PrintWriter out = new PrintWriter("src\\Time.txt");
         long StartTime;
+        long timeGame;
         StartTime=System.currentTimeMillis();
+        out.println();
+
+
+
 
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         int vert = sSize.height-50;
@@ -43,16 +52,16 @@ public class Main {
         frame.add(tankPanel);        // добавляем в окно панель
         frame.setSize(hor,vert);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // при закрытии окошка нужно завершить выполнение программы
 
 
 
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();   // менеджер по трудоустройству слушателей клавиатуры
         manager.addKeyEventDispatcher(tankPanel);    // подключаем нашу панель к прослушиванию клавиатуры
 
+        timeGame=(System.currentTimeMillis()-StartTime);
         while (true) {
             frame.repaint();
         }
-
-
     }
 }
