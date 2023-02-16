@@ -150,101 +150,56 @@ public class Tank extends GameObject {
         return TankY;
     }
 
-    public int[] getTankX(int a, int b) {
+    public double getTankX(int a) {
         int w = image.getWidth();
         int h = image.getHeight();
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
-        int[] TankX = new int[2];
-        int i = 0;
+        double TankX = 1234567890;
         if (a == 1) {
-            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
-            i += 1;
+            TankX = (int) (x + w * 0.5 * c + h * 0.5 * s);
         }
         if (a == 2) {
-            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
-            i += 1;
+            TankX = (int) (x - w * 0.5 * c + h * 0.5 * s);
         }
         if (a == 3) {
-            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
-            i += 1;
+            TankX = (int) (x - w * 0.5 * c - h * 0.5 * s);
         }
         if (a == 4) {
-            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
-            i += 1;
+            TankX = (int) (x + w * 0.5 * c - h * 0.5 * s);
         }
-
-        if (b == 1) {
-            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 2) {
-            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 3) {
-            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 4) {
-            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
-            i += 1;
+        if (TankX==1234567890) {
+            TankX = 1234567890;
+            System.out.println("Ввекдите корректный номер вершины танка ( от 1 до 4 )");
         }
         return TankX;
     }
 
-    public int[] getTankY(int a, int b) {
+    public double getTankY(int a) {
         int w = image.getWidth();
-        int h = image.getWidth();
+        int h = image.getHeight();
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
-        int[] TankX = new int[2];
-        int i = 0;
-
-
-        int[] TankY = new int[]{
-                (int) (y + w * 0.5 * s - h * 0.5 * c),
-                (int) (y - w * 0.5 * s - h * 0.5 * c),
-                (int) (y - w * 0.5 * s + h * 0.5 * c),
-                (int) (y + w * 0.5 * s + h * 0.5 * c),
-        };
-
-
+        double TankY=1234567890;
 
         if (a == 1) {
-            TankY[i] = (int) (y + w * 0.5 * s - h * 0.5 * c);
-            i += 1;
+            TankY = (int) (y + w * 0.5 * s - h * 0.5 * c);
         }
         if (a == 2) {
-            TankX[i] = (int)(y - w * 0.5 * s - h * 0.5 * c);
-            i += 1;
+            TankY = (int)(y - w * 0.5 * s - h * 0.5 * c);
         }
         if (a == 3) {
-            TankX[i] = (int) (y - w * 0.5 * s + h * 0.5 * c);
-            i += 1;
+            TankY = (int) (y - w * 0.5 * s + h * 0.5 * c);
         }
         if (a == 4) {
-            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
-            i += 1;
+            TankY = (int) (x + w * 0.5 * c - h * 0.5 * s);
+        }
+        if(TankY==1234567890){
+            TankY = 1234567890;
+            System.out.println("Ввекдите корректный номер вершины танка ( от 1 до 4 )");
         }
 
-        if (b == 1) {
-            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 2) {
-            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 3) {
-            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
-            i += 1;
-        }
-        if (b == 4) {
-            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
-            i += 1;
-        }
-        return TankX;
+        return TankY;
     }
 
 

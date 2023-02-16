@@ -119,5 +119,103 @@ public class BotTank extends GameObject {
         return TankY;
     }
 
+    public int[] getTankX(int a, int b) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        double s = Math.sin(Math.toRadians(angle));
+        double c = Math.cos(Math.toRadians(angle));
+        int[] TankX = new int[2];
+        int i = 0;
+        if (a == 1) {
+            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (a == 2) {
+            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (a == 3) {
+            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+        if (a == 4) {
+            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+
+        if (b == 1) {
+            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 2) {
+            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 3) {
+            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 4) {
+            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+        return TankX;
+    }
+
+    public int[] getTankY(int a, int b) {
+        int w = image.getWidth();
+        int h = image.getWidth();
+        double s = Math.sin(Math.toRadians(angle));
+        double c = Math.cos(Math.toRadians(angle));
+        int[] TankX = new int[2];
+        int i = 0;
+
+
+        int[] TankY = new int[]{
+                (int) (y + w * 0.5 * s - h * 0.5 * c),
+                (int) (y - w * 0.5 * s - h * 0.5 * c),
+                (int) (y - w * 0.5 * s + h * 0.5 * c),
+                (int) (y + w * 0.5 * s + h * 0.5 * c),
+        };
+
+
+
+        if (a == 1) {
+            TankY[i] = (int) (y + w * 0.5 * s - h * 0.5 * c);
+            i += 1;
+        }
+        if (a == 2) {
+            TankX[i] = (int)(y - w * 0.5 * s - h * 0.5 * c);
+            i += 1;
+        }
+        if (a == 3) {
+            TankX[i] = (int) (y - w * 0.5 * s + h * 0.5 * c);
+            i += 1;
+        }
+        if (a == 4) {
+            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+
+        if (b == 1) {
+            TankX[i] = (int) (x + w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 2) {
+            TankX[i] = (int) (x - w * 0.5 * c + h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 3) {
+            TankX[i] = (int) (x - w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+        if (b == 4) {
+            TankX[i] = (int) (x + w * 0.5 * c - h * 0.5 * s);
+            i += 1;
+        }
+        return TankX;
+    }
+
+
 
 }

@@ -5,7 +5,7 @@ public class Bullet {
     double x;
     double y;
     double Angle;
-    double v=8;
+    double v=2;
     double DamageNormal=100;
     double Damage;
     int IndicationTank;
@@ -20,7 +20,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        g.setColor(new Color(55, 250, 31, 255));
+        g.setColor(new Color(61, 239, 21, 255));
         g.fillOval((int) x, (int) y, 10, 10);
     }
     public boolean update() {

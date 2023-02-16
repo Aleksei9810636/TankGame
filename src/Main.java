@@ -8,11 +8,13 @@ import java.util.ArrayList;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, InterruptedException {
         BufferedImage SteelBox= ImageIO.read(new File("imgs\\SteelBox.jpg"));
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
         long StartTime;
         StartTime=System.currentTimeMillis();
+        long dt;
+
 
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         int vert = sSize.height-50;
@@ -30,6 +32,7 @@ public class Main {
         Wall wall3=new Wall(hor-51,0,51,vert,SteelBox, 100000 );
         Wall wall4=new Wall(0,vert-86, hor, 51, SteelBox,10000);
         Wall wall5=new Wall(-300, -200, 51, vert+200, SteelBox, 100000 );
+        Wall wall7=new Wall(1000, 150, 100, (int)vert-100, SteelBox, 10000);
 
         walls.add(wall1);
         walls.add(wall2);
@@ -37,6 +40,7 @@ public class Main {
         walls.add(wall4);
         walls.add(wall5);
         walls.add(wall6);
+        walls.add(wall7);
         // Создаем окно
         JFrame frame = new JFrame();
         TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
@@ -51,6 +55,7 @@ public class Main {
 
         while (true) {
             frame.repaint();
+            Thread.sleep(2);
         }
 
 
