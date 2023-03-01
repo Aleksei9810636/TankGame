@@ -22,9 +22,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     ArrayList<Wall> Startwalls;
     ArrayList<BotTank> BotTanks = new ArrayList<>();
     ArrayList<BotGun> BotGuns = new ArrayList<BotGun>();
+    ArrayList<StringPaint> stringPaint= new ArrayList<>();
     int sumBotTank = 0;
     long StartTime;
     long time;
+    long StringStartTime;
 
     public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun, long StartTime) throws IOException {       //Это вероятно не надо
         this.tank1 = tank1;
@@ -37,6 +39,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         addMouseMotionListener(this);
         this.StartTime = StartTime;
         System.nanoTime();
+        StringStartTime=0;
     }
 
 
@@ -116,6 +119,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         if (e.getID() == KeyEvent.KEY_PRESSED) {
 //            System.out.println(e.getKeyCode());
+            if (e.getKeyCode() == 192) {                      // фигово реализоваанное подключение фигово реализованного чита
+                tank1.typeOfEventCheat = true;
+            }
             if (e.getKeyCode() == 39) {
                 if ((System.currentTimeMillis() - tank2.LastShotTime) * 0.001 > tank2.RechargeTime) {
                     tank2.LastShotTime = System.currentTimeMillis();
@@ -169,6 +175,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             }
         }
         if (e.getID() == KeyEvent.KEY_RELEASED) {
+            if (e.getKeyCode() == 27) {                          // чит
+                tank1.typeOfEventCheat = false;
+            }
+
             if (e.getKeyChar() == 'w') {
                 tank1.typeOfEventW = false;
             }
@@ -203,9 +213,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     }
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
-        if (time > 3000 && sumBotTank < 3) {
+        if (time > 3000 && sumBotTank < 1) {
             BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
-            BotTank botTank1 = new BotTank(-90, 111 * sumBotTank + 400, 0.3, 0.05, 900, 1, image, tank1, tank2);
+            BotTank botTank1 = new BotTank(-90, 111 * sumBotTank + 400, 0.3, 0.05, 900, 2, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, tank1, tank2);
 //            BotGuns.add(sumBotTank, botGun1);
@@ -346,7 +356,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     public double SetAngle(double x1,double y1, double x2, double y2){
         double normAngle;
         double cos= (x1*x2+y1*y2)/(Math.sqrt(x1*x1+y1*y1)*Math.sqrt(x2*x2+y2*y2));
-        double Angle=Math.toDegrees(Math.acos(cos));
+        System.out.println(Math.toDegrees(cos));
+
+        double Angle=90+Math.toDegrees(Math.acos(cos));          // все как всегда с углами
         if (Angle > 90){
             normAngle=180-Angle;
         }else{
@@ -354,11 +366,27 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
         if(normAngle<0){
             System.out.println("А этот угол в SetAngle не должен быть меньше нуля");
+            System.out.println("Столкновение изнутри танка");
+            StringPaint stringPaint3=new StringPaint("А этот угол в SetAngle не должен быть меньше нуля"+"  Столкновение изнутри танка", 100, 100, 800);
+            stringPaint.add(stringPaint3);
+        }
+        if(normAngle>90){
+            System.out.println("А этот угол в SetAngle не должен быть >90");
+            StringPaint stringPaint4=new StringPaint("А этот угол в SetAngle не должен быть >90", 100, 300, 2000);
+            stringPaint.add(stringPaint4);
         }
         return normAngle;
     }
+    public boolean lineIntersects(double ax1,double ay1,double ax2,double ay2,double bx1,double by1,double bx2,double by2){
 
-        public void HitCheck () {
+
+        if(Math.signum((ax2-ax1)*(by2-ay1)-()*())!=Math.signum() && Math.signum()!=Math.signum()){
+
+        }
+
+    }// ax*by-ay*bx
+
+        public void HitCheck (Graphics g) {
         int[] Tank1X = tank1.getTankX();
         int[] Tank1Y = tank1.getTankY();
         int[] Tank2X = tank2.getTankX();
@@ -372,35 +400,91 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
 
 
-                if(SetAngle(Math.cos(Math.toRadians(bullet.Angle)),
-                        Math.sin(Math.toRadians(bullet.Angle)),
-                        tank1.getTankX(2)-tank1.getTankX(1),
-                        tank1.getTankY(2)-tank1.getTankY(1) )<30){
-                    bullets.remove(i);
-                    if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                        break;
-                    } else {
-                        i -= 1;
+
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+                StringPaint stringPaint1=new StringPaint("Командир, нас атакуют!", 100, 100, 3000);
+                stringPaint.add(stringPaint1);
+
+                for(int ver = 1; ver<5; ver++ ) {
+                    int nextVer=ver+1;
+                    if(ver==4){
+                        nextVer=1;
                     }
-                    System.out.println("dajskgh");
+
+                    if (SetAngle
+                            (Math.cos(Math.toRadians(bullet.Angle)),
+                                    Math.sin(Math.toRadians(bullet.Angle)),
+                                    tank1.getTankX(nextVer) - tank1.getTankX(ver),
+                                    tank1.getTankY(nextVer) - tank1.getTankY(ver))
+                            < 45 &&
+                            SetAngle(Math.cos(Math.toRadians(bullet.Angle)),
+                              Math.sin(Math.toRadians(bullet.Angle)),
+                            tank1.getTankX(nextVer) - tank1.getTankX(ver),
+                            tank1.getTankY(nextVer) - tank1.getTankY(ver))
+                            >0 &&
+                            lineIntersects
+                    ) {
+                        StringPaint stringPaint2=new StringPaint("Рикошет!!!!!!!!!!", 100, 150, 3000);
+                        stringPaint.add(stringPaint2);
+
+                        bullets.remove(i);
+                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                            break;
+                        } else {
+                            i -= 1;
+                        }
+                    }
+                    else
+                    {
+                        if (!tank1.typeOfEventCheat) {
+                            this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                            bullets.remove(i);
+                        } else {
+                            bullets.remove(i);
+
+                        }
+                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                            break;
+                        } else {
+                            i -= 1;
+                        }
+                    }
                 }
 
 
 
 
 
-                if (!tank1.typeOfEventCheat) {
-                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
-                    bullets.remove(i);
-                } else {
-                    bullets.remove(i);
-                }
+//                if (!tank1.typeOfEventCheat) {
+//                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+//                    bullets.remove(i);
+//                } else {
+//                    bullets.remove(i);
+//                    PanelPaint("-100", 433,222,5,g);
+//                }
                 if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
                     break;
                 } else {
                     i -= 1;
                 }
             }
+
+
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
             if (P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
                 this.tank2.HitPoints -= bullets.get(i).Damage;
                 bullets.remove(i);
@@ -441,7 +525,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                //
                 updateCollisions(g);
                 GunAngle();
                 tank1.UpdatePlace();
@@ -450,7 +533,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 gun1.UpdatePlace();
                 keyBoardGun.UpdatePlace();
                 BulletList(g);
-                HitCheck();
+                HitCheck(g);
 
 
                 tank1.paint(g);
@@ -458,6 +541,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
                 gun1.paint(g, tank1.x, tank1.y);
                 keyBoardGun.paint(g, tank2.x, tank2.y);
+                for(int i = 0; i < stringPaint.size(); i++){
+                    stringPaint.get(i).paint(g);
+                    if(stringPaint.get(i).death==false){
+                        stringPaint.remove(i);
+                    }
+                }
 
                 for (int i = 0; i < walls.size(); i++) {
                     walls.get(i).paint(g);
@@ -473,9 +562,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 }
 
                 g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
-            g.setColor(new Color(241, 6, 6, 255));
+            g.setColor(new Color(6, 214, 241, 255));
                 g.drawLine((int)(tank1.getTankX(1)), (int)tank1.getTankY(1), (int)tank1.getTankX(2), (int)tank1.getTankY(2));
-            g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
+            //g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
 
         }
 

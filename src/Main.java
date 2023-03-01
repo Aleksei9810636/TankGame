@@ -21,12 +21,12 @@ public class Main {
         int hor  = sSize.width;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
-        Tank tank1=new Tank(1800,300, 1,  0.05, 900, 50, 5);
+        Tank tank1=new Tank(1800,300, 1.5,  0.05, 9000, 50, 1);
         Tank tank2=new Tank(1800, 500, 1, 0.05, 900, 1050, 2);
         Gun gun=new Gun(0.2);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.2);
         ArrayList<Wall> walls=new ArrayList<>();
-        Wall wall1=new Wall(1000, 100, 100, 200,WoodBox, 300);
+        Wall wall1=new Wall(1000, 200, 100, 200,WoodBox, 300);
         Wall wall6=new Wall(1000, 600, 100, 200, WoodBox, 300);
         Wall wall2=new Wall(0,0, hor, 51, SteelBox, 100000);        // края
         Wall wall3=new Wall(hor-51,0,51,vert,SteelBox, 100000 );
@@ -55,9 +55,11 @@ public class Main {
 
         while (true) {
             frame.repaint();
-            Thread.sleep(2);
+            Thread.sleep(1);
         }
 
 
     }
 }
+
+// на тебя СетАнгл ругается

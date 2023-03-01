@@ -48,7 +48,7 @@ public class Tank extends GameObject {
 
         if (typeOfEventCheat) {
             g.setColor(new Color(166, 11, 227));
-            g.fillRect(1100, 20, 30, 5);
+            g.fillRect(1100, 100, 30, 5);
             LastShotTime=1;
         }
 
