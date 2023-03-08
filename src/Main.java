@@ -21,7 +21,7 @@ public class Main {
         int hor  = sSize.width;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
-        Tank tank1=new Tank(1800,300, 1.5,  0.05, 9000, 50, 1);
+        Tank tank1=new Tank(800,300, 1.5,  0.05, 1900, 50, 1);
         Tank tank2=new Tank(1800, 500, 1, 0.05, 900, 1050, 2);
         Gun gun=new Gun(0.2);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.2);
@@ -45,7 +45,7 @@ public class Main {
         JFrame frame = new JFrame();
         TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
         frame.add(tankPanel);        // добавляем в окно панель
-        frame.setSize(hor,vert);
+        frame.setSize(hor,vert-350);
         frame.setVisible(true);
 
 
@@ -61,5 +61,3 @@ public class Main {
 
     }
 }
-
-// на тебя СетАнгл ругается

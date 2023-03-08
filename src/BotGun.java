@@ -36,8 +36,8 @@ import java.io.IOException;
             if(skylineAngle<0){
                 skylineAngle+=360;
             }
-            DirectionAngle=skylineAngle;
-
+//            DirectionAngle=skylineAngle;
+            DirectionAngle=270;                                     // удалри тут равенство и отмени комит предыдущей строки
             typeOfEventFire=false;
             if(Math.abs(DirectionAngle-Angle)<10 ){
                 typeOfEventFire=true;

@@ -54,10 +54,10 @@ public class Tank extends GameObject {
 
 
         g.setColor(new Color(75, 68, 68));
-        g.drawRect((int) (laja * 0.5), 920, (int) (HitPointsMax * 0.5), 10);
+        g.drawRect((int) (laja * 0.5), 320, (int) (HitPointsMax * 0.5), 10);
         g.setColor(new Color(239, 12, 12));
-        g.fillRect((int) (laja * 0.5), 920, (int) (HitPoints * 0.5), 10);
-        g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 910);
+        g.fillRect((int) (laja * 0.5), 320, (int) (HitPoints * 0.5), 10);
+        g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 310);
         if (HitPoints <= 0) {
             g.setColor(new Color(0, 224, 205));
             g.fillRect(0, 0, 2000, 2000);
