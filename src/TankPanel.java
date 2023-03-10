@@ -27,6 +27,21 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     long StartTime;
     long time;
     long StringStartTime;
+    Thread threadMusic = new Thread(() -> {
+        while(true) {
+            new MakeSound().playSound("music\\silent-wood.wav");
+            System.out.println("audio file finished!");
+            //threadMusic.start();  вставь это туда, где должна заиграть музыка
+        }
+    });
+    void threadYest_probitie(){
+        new Thread(() -> {
+            new MakeSound().playSound("music\\Yest_probitie.wav");
+            //threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
+            System.out.println("audio file finished!");
+        }).start();
+    }
+
 
     public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun, long StartTime) throws IOException {       //Это вероятно не надо
         this.tank1 = tank1;
@@ -40,6 +55,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.StartTime = StartTime;
         System.nanoTime();
         StringStartTime=0;
+
+        threadMusic.start();
+//        thread.interrupt();          //  это остановит музыку
     }
 
 
@@ -335,15 +353,15 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for (int i = 0; i < walls.size(); i++) {
             Wall wall = walls.get(i);
             int[] WallX = new int[]{
-                    (int) (wall.x),
-                    (int) (wall.x + wall.width),
-                    (int) (wall.x + wall.width),
-                    (int) (wall.x)};
+                    wall.x,
+                    wall.x + wall.width,
+                    wall.x + wall.width,
+                    wall.x};
             int[] WallY = new int[]{
-                    (int) (wall.y),
-                    (int) (wall.y),
-                    (int) (wall.y + wall.height),
-                    (int) (wall.y + wall.height)};
+                    wall.y,
+                    wall.y,
+                    wall.y + wall.height,
+                    wall.y + wall.height};
             Polygon P_wall = new Polygon(WallX, WallY, 4);
             for (int k = 0; k < bullets.size(); k++) {
                 if ((P_wall.intersects(bullets.get(k).x, bullets.get(k).y, 10, 10))) {
@@ -362,11 +380,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //
 //    }
     public boolean lineIntersects(double ax1,double ay1,double ax2,double ay2,double bx1,double by1,double bx2,double by2){
-        if(Math.signum((ax2-ax1)*(by2-ay1)-(ay2-ay1)*(bx2-ax1))!=Math.signum((ax2-ax1)*(by1-ay1)-(ay2-ay1)*(bx1-ax1))
-                && Math.signum((bx2-bx1)*(ay1-by1)-(by2-by1)*(ax1-bx1))!=Math.signum((bx2-bx1)*(ay2-by1)-(by2-by1)*(ax2-bx1))){
-            return  true;
-        }
-        return  false;
+        return Math.signum((ax2 - ax1) * (by2 - ay1) - (ay2 - ay1) * (bx2 - ax1)) != Math.signum((ax2 - ax1) * (by1 - ay1) - (ay2 - ay1) * (bx1 - ax1))
+                && Math.signum((bx2 - bx1) * (ay1 - by1) - (by2 - by1) * (ax1 - bx1)) != Math.signum((bx2 - bx1) * (ay2 - by1) - (by2 - by1) * (ax2 - bx1));
     }//                          ax*by-ay*bx
 
         public void HitCheck (Graphics g) {
@@ -379,6 +394,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
+                threadYest_probitie();
                 for (int v = 1; v < 5; v++) {
                     int nextv;
                     if (v == 4) {
@@ -391,7 +407,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     Polygon P_t1 = new Polygon(TankX, TankY, 2);
                     if (P_t1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
 
-                        StringPaint stringPaint1 = new StringPaint(Integer.toString(v) + Integer.toString(nextv), 100, 500, 2500);
+                        StringPaint stringPaint1 = new StringPaint(Integer.toString(v) + nextv, 100, 500, 2500);
                         stringPaint.add(stringPaint1);
                         if (!tank1.typeOfEventCheat) {
                             this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
@@ -433,7 +449,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     Polygon P_t2 = new Polygon(TankX, TankY, 2);
                     if (P_t2.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 2) {
 
-                        StringPaint stringPaint2 = new StringPaint(Integer.toString(v) + Integer.toString(nextv), 1800, 500, 2500);
+                        StringPaint stringPaint2 = new StringPaint(Integer.toString(v) + nextv, 1800, 500, 2500);
                         stringPaint.add(stringPaint2);
                         this.tank2.HitPoints -= bullets.get(i).Damage;
                         bullets.remove(i);
@@ -493,7 +509,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 keyBoardGun.paint(g, tank2.x, tank2.y);
                 for(int i = 0; i < stringPaint.size(); i++){
                     stringPaint.get(i).paint(g);
-                    if(stringPaint.get(i).death==false){
+                    if(!stringPaint.get(i).death){
                         stringPaint.remove(i);
                     }
                 }

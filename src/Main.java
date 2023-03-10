@@ -10,18 +10,17 @@ import java.util.Scanner;
 
 
 public class Main {
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        System.out.println("Start...");
-
-        new Thread(() -> {
+        Thread threadMusic = new Thread(() -> {
             while(true) {
-                new MakeSound().playSound("music\\silent-wood.wav");
+                new MakeSound().playSound("music\\SoundNO.wav");
                 System.out.println("audio file finished!");
+                //threadMusic.start();  вставь это туда, где должна заиграть музыка
             }
-        }).start();
-
-        System.out.println("main() finished!");
+        });
+        threadMusic.start();
 
 
 
