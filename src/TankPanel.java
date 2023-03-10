@@ -358,31 +358,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             }
         }
     }
-    public double SetAngle(double x1,double y1, double x2, double y2){
-        double normAngle;
-        double cos= (x1*x2+y1*y2)/(Math.sqrt(x1*x1+y1*y1)*Math.sqrt(x2*x2+y2*y2));
-//        System.out.println(Math.toDegrees(cos));
-        normAngle=Math.toDegrees(cos);
-
-//        double Angle=90+Math.toDegrees(Math.acos(cos));          // все как всегда с углами
-//        if (Angle > 90){
-//            normAngle=180-Angle;
-//        }else{
-//            normAngle=Angle;
-//        }
-        if(normAngle<0){
-//            System.out.println("А этот угол в SetAngle не должен быть меньше нуля");
-//            System.out.println("Столкновение изнутри танка");
-//            StringPaint stringPaint3=new StringPaint("А этот угол в SetAngle не должен быть меньше нуля"+"  Столкновение изнутри танка", 100, 150, 800);
-//            stringPaint.add(stringPaint3);
-        }
-        if(normAngle>90){
-            System.out.println("А этот угол в SetAngle не должен быть >90");
-            StringPaint stringPaint4=new StringPaint("А этот угол в SetAngle не должен быть >90", 100, 300, 2000);
-            stringPaint.add(stringPaint4);
-        }
-        return normAngle;
-    }
+//    public double SetAngle(){
+//
+//    }
     public boolean lineIntersects(double ax1,double ay1,double ax2,double ay2,double bx1,double by1,double bx2,double by2){
         if(Math.signum((ax2-ax1)*(by2-ay1)-(ay2-ay1)*(bx2-ax1))!=Math.signum((ax2-ax1)*(by1-ay1)-(ay2-ay1)*(bx1-ax1))
                 && Math.signum((bx2-bx1)*(ay1-by1)-(by2-by1)*(ax1-bx1))!=Math.signum((bx2-bx1)*(ay2-by1)-(by2-by1)*(ax2-bx1))){
@@ -401,64 +379,32 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
-
-
-
-
-
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-                for(int ver = 1; ver<5; ver++ ) {
-                    int nextVer = ver + 1;
-                    if (ver == 4) {
-                        nextVer = 1;
+                for (int v = 1; v < 5; v++) {
+                    int nextv;
+                    if (v == 4) {
+                        nextv = 1;
+                    } else {
+                        nextv = v + 1;
                     }
-//                    System.out.println("Предыдущие координаты  " + (bullet.x - 10 * bullet.v * Math.sin(Math.toRadians(bullet.Angle))) + "          " + (bullet.y + 10 * bullet.v * Math.cos(Math.toRadians(bullet.Angle))));
-//                    System.out.println("Координаты сейчас  " + bullet.x + "       " + (int) bullet.y);
+                    int[] TankX = tank1.getTankX(v, nextv);
+                    int[] TankY = tank1.getTankY(v, nextv);
+                    Polygon P_t1 = new Polygon(TankX, TankY, 2);
+                    if (P_t1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
 
-                    System.out.println(SetAngle
-                            (Math.cos(Math.toRadians(bullet.Angle)),
-                                    Math.sin(Math.toRadians(bullet.Angle)),
-                                    tank1.getTankX(nextVer) - tank1.getTankX(ver),
-                                    tank1.getTankY(nextVer) - tank1.getTankY(ver)));
-
-
-                    StringPaint stringPaint1=new StringPaint("Командир, нас атакуют!", 100, 100, 3000);
-                    stringPaint.add(stringPaint1);
-                    if (SetAngle
-                            (Math.cos(Math.toRadians(bullet.Angle)),
-                                    Math.sin(Math.toRadians(bullet.Angle)),
-                                    tank1.getTankX(nextVer) - tank1.getTankX(ver),
-                                    tank1.getTankY(nextVer) - tank1.getTankY(ver))
-                            < 45 &&
-                            SetAngle(Math.cos(Math.toRadians(bullet.Angle)),
-                                    Math.sin(Math.toRadians(bullet.Angle)),
-                                    tank1.getTankX(nextVer) - tank1.getTankX(ver),
-                                    tank1.getTankY(nextVer) - tank1.getTankY(ver))
-                                    > 0 &&
-                            lineIntersects(tank1.getTankX(ver), tank1.getTankY(ver), tank1.getTankX(nextVer), tank1.getTankY(nextVer),
-                                    bullet.x - bullet.v * Math.sin(Math.toRadians(bullet.Angle)), bullet.y + bullet.v * Math.cos(Math.toRadians(bullet.Angle)), bullet.x, bullet.y)
-                    ) {
-                        StringPaint stringPaint2 = new StringPaint("Рикошет!!!!!!!!!!", 100, 250, 2000);
-                        stringPaint.add(stringPaint2);
-
-                        bullets.remove(i);
+                        StringPaint stringPaint1 = new StringPaint(Integer.toString(v) + Integer.toString(nextv), 100, 500, 2500);
+                        stringPaint.add(stringPaint1);
+                        if (!tank1.typeOfEventCheat) {
+                            this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                            bullets.remove(i);
+                        } else {
+                            bullets.remove(i);
+                        }
                         if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
                             break;
                         } else {
                             i -= 1;
                         }
                     }
-                }
-
-
-
-                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                    break;
-                } else {
-                    i -= 1;
                 }
 //                if (!tank1.typeOfEventCheat ) {
 //                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
@@ -467,36 +413,42 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //                    bullets.remove(i);
 //
 //                }
-                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                    break;
-                } else {
-                    i -= 1;
-                }
-
-
-
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+//                    break;
+//                } else {
+//                    i -= 1;
+//                }
             }
 
+            if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
+                for (int v = 1; v < 5; v++) {
+                    int nextv;
+                    if (v == 4) {
+                        nextv = 1;
+                    } else {
+                        nextv = v + 1;
+                    }
+                    int[] TankX = tank2.getTankX(v, nextv);
+                    int[] TankY = tank2.getTankY(v, nextv);
+                    Polygon P_t2 = new Polygon(TankX, TankY, 2);
+                    if (P_t2.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 2) {
 
-
-
-
-            if (P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
-                this.tank2.HitPoints -= bullets.get(i).Damage;
-                bullets.remove(i);
-                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                    break;
-                } else {
-                    i -= 1;
+                        StringPaint stringPaint2 = new StringPaint(Integer.toString(v) + Integer.toString(nextv), 1800, 500, 2500);
+                        stringPaint.add(stringPaint2);
+                        this.tank2.HitPoints -= bullets.get(i).Damage;
+                        bullets.remove(i);
+                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                            break;
+                        } else {
+                            i -= 1;
+                        }
+                    }
                 }
             }
+
             for (int s = 0; s < BotTanks.size(); s++) {
                 Polygon P_botTank = new Polygon(BotTanks.get(s).getTankX(), BotTanks.get(s).getTankY(), 4);
-                if (P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && (bullets.get(i).IndicationTank != 11)) {                   // отстойненько т.к. размер пули не читается
+                if (bullets.size() != 0 && P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && (bullets.get(i).IndicationTank != 11)) {                   // отстойненько т.к. размер пули не читается
                     BotTanks.get(s).HitPoints -= bullets.get(i).Damage;
                     bullets.remove(i);
                     if (BotTanks.get(s).HitPoints <= 0) {
@@ -511,9 +463,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     }
                 }
             }
-        }
-    }
-
+        }}
         @Override
         protected void paintComponent (Graphics g) {
             super.paintComponent(g);
@@ -566,6 +516,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 g.drawLine((int)(tank1.getTankX(1)), (int)tank1.getTankY(1), (int)tank1.getTankX(2), (int)tank1.getTankY(2));
             //g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
         }
+
+
+
 
 
     }

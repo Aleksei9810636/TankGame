@@ -4,17 +4,33 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        System.out.println("Start...");
+
+        new Thread(() -> {
+            while(true) {
+                new MakeSound().playSound("music\\silent-wood.wav");
+                System.out.println("audio file finished!");
+            }
+        }).start();
+
+        System.out.println("main() finished!");
+
+
+
         BufferedImage SteelBox= ImageIO.read(new File("imgs\\SteelBox.jpg"));
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
+        Scanner scanner = new Scanner(new File("src\\Time.txt"));
+        PrintWriter out = new PrintWriter("src\\Time.txt");
         long StartTime;
         StartTime=System.currentTimeMillis();
-        long dt;
-
 
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         int vert = sSize.height-50;
@@ -47,6 +63,7 @@ public class Main {
         frame.add(tankPanel);        // добавляем в окно панель
         frame.setSize(hor,vert-350);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // при закрытии окошка нужно завершить выполнение программы
 
 
 
@@ -57,7 +74,5 @@ public class Main {
             frame.repaint();
             Thread.sleep(1);
         }
-
-
     }
 }

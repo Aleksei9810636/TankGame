@@ -5,8 +5,8 @@ public class Bullet {
     double x;
     double y;
     double Angle;
-    double v=2;
-    double DamageNormal=100;
+    double v=8;
+    double DamageNormal=10;
     double Damage;
     int IndicationTank;
     int R=61;
