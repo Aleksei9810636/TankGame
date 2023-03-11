@@ -13,14 +13,14 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Thread threadMusic = new Thread(() -> {
-            while(true) {
-                new MakeSound().playSound("music\\SoundNO.wav");
-                System.out.println("audio file finished!");
-                //threadMusic.start();  вставь это туда, где должна заиграть музыка
-            }
-        });
-        threadMusic.start();
+//        Thread threadMusic = new Thread(() -> {
+//            while(true) {
+//                new MakeSound().playSound("music\\SoundNO.wav");
+//                System.out.println("audio file finished!");
+//                //threadMusic.start();  вставь это туда, где должна заиграть музыка
+//            }
+//        });
+//        threadMusic.start();
 
 
 
@@ -60,7 +60,7 @@ public class Main {
         JFrame frame = new JFrame();
         TankPanel tankPanel=new TankPanel(tank1, tank2, walls, gun, keyBoardGun, StartTime);
         frame.add(tankPanel);        // добавляем в окно панель
-        frame.setSize(hor,vert-350);
+        frame.setSize(hor,vert);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // при закрытии окошка нужно завершить выполнение программы
 
@@ -71,7 +71,7 @@ public class Main {
 
         while (true) {
             frame.repaint();
-            Thread.sleep(1);
+            Thread.sleep(5);
         }
     }
 }

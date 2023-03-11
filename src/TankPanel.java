@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
+    String stage="start";                 //"game";   //"menu";
+    BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
+    BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
     Tank tank1;
     Tank tank2;
     Gun gun1;
@@ -21,12 +24,13 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     ArrayList<Wall> walls = new ArrayList<>();
     ArrayList<Wall> Startwalls;
     ArrayList<BotTank> BotTanks = new ArrayList<>();
-    ArrayList<BotGun> BotGuns = new ArrayList<BotGun>();
     ArrayList<StringPaint> stringPaint= new ArrayList<>();
     int sumBotTank = 0;
     long StartTime;
     long time;
     long StringStartTime;
+    long gametime=0;
+
     Thread threadMusic = new Thread(() -> {
         while(true) {
             new MakeSound().playSound("music\\silent-wood.wav");
@@ -227,6 +231,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         public void UPTime (Graphics g){
         time = System.currentTimeMillis() - StartTime;
+        g.drawString(Integer.toString((int) (time / 1000)), 100, 100);
+
+    }
+    public void UPgametime (Graphics g){
+
+        gametime =5 ;
         g.drawString(Integer.toString((int) (time / 1000)), 800, 100);
 
     }
@@ -394,47 +404,68 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
             if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
-                threadYest_probitie();
-                for (int v = 1; v < 5; v++) {
-                    int nextv;
-                    if (v == 4) {
-                        nextv = 1;
-                    } else {
-                        nextv = v + 1;
-                    }
-                    int[] TankX = tank1.getTankX(v, nextv);
-                    int[] TankY = tank1.getTankY(v, nextv);
-                    Polygon P_t1 = new Polygon(TankX, TankY, 2);
-                    if (P_t1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
-
-                        StringPaint stringPaint1 = new StringPaint(Integer.toString(v) + nextv, 100, 500, 2500);
-                        stringPaint.add(stringPaint1);
-                        if (!tank1.typeOfEventCheat) {
-                            this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
-                            bullets.remove(i);
-                        } else {
-                            bullets.remove(i);
-                        }
-                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                            break;
-                        } else {
-                            i -= 1;
-                        }
-                    }
+                if(!tank1.typeOfEventCheat) {
+                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                    bullets.remove(i);
+                }else {
+                    bullets.remove(i);
                 }
-//                if (!tank1.typeOfEventCheat ) {
-//                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
-//                    bullets.remove(i);
-//                } else {
-//                    bullets.remove(i);
-//
-//                }
-//                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-//                    break;
-//                } else {
-//                    i -= 1;
-//                }
+                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                    break;
+                } else {
+                    i -= 1;
+                }
             }
+
+
+
+
+
+
+
+
+//            if (P_tank1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
+//                threadYest_probitie();
+//                for (int v = 1; v < 5; v++) {
+//                    int nextv;
+//                    if (v == 4) {
+//                        nextv = 1;
+//                    } else {
+//                        nextv = v + 1;
+//                    }
+//                    int[] TankX = tank1.getTankX(v, nextv);
+//                    int[] TankY = tank1.getTankY(v, nextv);
+//                    Polygon P_t1 = new Polygon(TankX, TankY, 2);
+//                    if (P_t1.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 1) {
+//
+//                        StringPaint stringPaint1 = new StringPaint(Integer.toString(v) + nextv, 100, 500, 2500);
+//                        stringPaint.add(stringPaint1);
+//                        if (!tank1.typeOfEventCheat) {
+//                            this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+//                            bullets.remove(i);
+//                        } else {
+//                            bullets.remove(i);
+//                        }
+//                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+//                            break;
+//                        } else {
+//                            i -= 1;
+//                        }
+//                    }
+//                }
+////                if (!tank1.typeOfEventCheat ) {
+////                    this.tank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+////                    bullets.remove(i);
+////                } else {
+////                    bullets.remove(i);
+////
+////                }
+////                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+////                    break;
+////                } else {
+////                    i -= 1;
+////                }
+//            }
 
             if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
                 for (int v = 1; v < 5; v++) {
@@ -465,6 +496,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             for (int s = 0; s < BotTanks.size(); s++) {
                 Polygon P_botTank = new Polygon(BotTanks.get(s).getTankX(), BotTanks.get(s).getTankY(), 4);
                 if (bullets.size() != 0 && P_botTank.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && (bullets.get(i).IndicationTank != 11)) {                   // отстойненько т.к. размер пули не читается
+                    threadYest_probitie();
                     BotTanks.get(s).HitPoints -= bullets.get(i).Damage;
                     bullets.remove(i);
                     if (BotTanks.get(s).HitPoints <= 0) {
@@ -483,14 +515,26 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         @Override
         protected void paintComponent (Graphics g) {
             super.paintComponent(g);
+            UPTime(g);
 
-                UPTime(g);
+            if(time>3000){
+                stage="menu";
+            }
+            if(time>10000){
+                stage="game";
+            }
+
+
+
+            if (stage.equals("game")) {
+
                 // это вставила джава
                 try {
                     BotControl(tank1, tank2, walls);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                UPgametime(g);
                 updateCollisions(g);
                 GunAngle();
                 tank1.UpdatePlace();
@@ -507,9 +551,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
                 gun1.paint(g, tank1.x, tank1.y);
                 keyBoardGun.paint(g, tank2.x, tank2.y);
-                for(int i = 0; i < stringPaint.size(); i++){
+                for (int i = 0; i < stringPaint.size(); i++) {
                     stringPaint.get(i).paint(g);
-                    if(!stringPaint.get(i).death){
+                    if (!stringPaint.get(i).death) {
                         stringPaint.remove(i);
                     }
                 }
@@ -526,16 +570,19 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            System.out.println(BotGuns.size());
 
                 }
-
                 g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
-            g.setColor(new Color(6, 214, 241, 255));
-                g.drawLine((int)(tank1.getTankX(1)), (int)tank1.getTankY(1), (int)tank1.getTankX(2), (int)tank1.getTankY(2));
-            //g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
+                g.setColor(new Color(6, 214, 241, 255));
+                g.drawLine((int) (tank1.getTankX(1)), (int) tank1.getTankY(1), (int) tank1.getTankX(2), (int) tank1.getTankY(2));
+                //g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
+            } else
+            {
+                if(stage.equals("start")){
+                    g.drawImage(imagestart, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+                }
+                if(stage.equals("menu")){
+                    g.drawImage(imagemenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
+                }
+            }
         }
-
-
-
-
-
     }
 
