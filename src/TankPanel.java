@@ -515,12 +515,13 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         @Override
         protected void paintComponent (Graphics g) {
             super.paintComponent(g);
+
             UPTime(g);
 
-            if(time>3000){
+            if(time>500){
                 stage="menu";
             }
-            if(time>10000){
+            if(time>1000){
                 stage="game";
             }
 
