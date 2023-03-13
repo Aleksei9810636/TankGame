@@ -15,10 +15,11 @@ import java.io.IOException;
         boolean typeOfEventFire=false;
         Tank tank1;
         Tank tank2;
-        BufferedImage image = ImageIO.read(new File("imgs\\gun.png"));
+        BotTank botTank;
+        BufferedImage image = ImageIO.read(new File("imgs\\redGun.png"));
 
-
-        public BotGun(double AbcVAngle, Tank tank1, Tank tank2) throws IOException {
+        public BotGun(double AbcVAngle, Tank tank1, Tank tank2, BotTank botTank) throws IOException {
+            this.botTank=botTank;
             this.AbcVAngle = AbcVAngle;
             this.tank1=tank1;
             this.tank2=tank2;
@@ -47,7 +48,7 @@ import java.io.IOException;
 
         public void UpdatePlace() {
             control();
-            VAngle += TankVAngle;
+            VAngle += botTank.VAngle;
             Angle += VAngle;
             if (DirectionAngle > Angle) {
                 if (DirectionAngle - Angle <= 180) {
@@ -57,7 +58,7 @@ import java.io.IOException;
                 }
             }
             if (DirectionAngle < Angle) {
-                if (Angle - DirectionAngle < 180) {
+                if (Angle - DirectionAngle <= 180) {
                     VAngle = -AbcVAngle;
                 } else {
                     VAngle = AbcVAngle;

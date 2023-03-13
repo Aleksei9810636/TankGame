@@ -19,7 +19,7 @@ public class Tank extends GameObject {
     double laja;
     double RechargeTime;
     long LastShotTime = 0;
-    BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
+    BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
     boolean typeOfEventW;
     boolean typeOfEventA;
     boolean typeOfEventS;

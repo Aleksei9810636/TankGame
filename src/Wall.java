@@ -13,8 +13,8 @@ public class Wall {
     int height;
     int UnitX;
     int UnitY;
-    int SizeBoxX=50;
-    int SizeBoxY=50;
+    int SizeBoxX=75;
+    int SizeBoxY=75;
     double BoxHP;
     Rectangle2D rectangle = new Rectangle2D.Double();
     BufferedImage image;

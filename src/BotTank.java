@@ -8,10 +8,12 @@ public class BotTank extends GameObject {
     double x;
     double y;
     double VAngle;
+    double AbcVAngle=0.2;
     double vy;
     double VMax;
     double a;
     double angle = 90;
+    double DirectionAngle;
     double HitPoints;
     double HitPointsMax;
     double RechargeTime;
@@ -37,7 +39,7 @@ public class BotTank extends GameObject {
         this.image = image;
         this.tank1=tank1;
         this.tank2=tank2;
-        botGun=new BotGun(0.2,tank1,tank2);
+        botGun=new BotGun(0.2,tank1,tank2, this);
 
     }
 
@@ -50,15 +52,17 @@ public class BotTank extends GameObject {
         g.drawString(Integer.toString((int)HitPoints),(int) x,(int) y-40);
     }
     public void UPPlace(){
-        typeOfEventW=true;
-    }
 
+//        typeOfEventW=true;
+        DirectionAngle= botGun.DirectionAngle;
+
+    }
     public void UpdatePlace() {
         UPPlace();
         double angleInRadians = Math.toRadians(angle);
         x += vy * Math.sin(angleInRadians);
         y -= vy * Math.cos(angleInRadians);
-        angle += VAngle * 1;
+//        angle += VAngle * 1;
         if (typeOfEventW != typeOfEventS) {
             if ((Math.abs(vy)) < VMax) {
                 if (typeOfEventW) {
@@ -74,24 +78,47 @@ public class BotTank extends GameObject {
                 vy = vy - Math.signum(vy) * a;
             }
         }
-
-
-        if (typeOfEventA != typeOfEventD) {
-            if ((Math.abs(VAngle)) < VMax * 0.5) {             // ВНИМАНИЕ какой то ... догадался сделать угловую и
-                if (typeOfEventA) {                      //линейную максимальную скорость одинаковыми
-                    VAngle -= a;
-                } else {
-                    VAngle += a;
+        boolean flag=false;
+        angle += VAngle;
+        if (DirectionAngle > angle) {
+            if (DirectionAngle - angle <= 180) {
+                VAngle = AbcVAngle;
+                if((DirectionAngle - angle )<= 45){
+                    flag=true;
+                }
+            } else {
+                VAngle = -AbcVAngle;
+                if((360-DirectionAngle+angle)<=45){
+                    flag=true;
                 }
             }
-        } else {
-            if (Math.abs(VAngle) <= a) {
-                VAngle = 0;
+        }
+        if (DirectionAngle < angle) {
+            if (angle - DirectionAngle <= 180) {
+                VAngle = -AbcVAngle;
+                if((angle-DirectionAngle)<=45){
+                    flag=true;
+                }
             } else {
-                VAngle -= Math.signum(VAngle) * a;
+                VAngle = AbcVAngle;
+                if((360-angle+DirectionAngle)<=45){
+                    flag=true;
+                }
             }
         }
+        if(flag){
+            typeOfEventW=true;
+        }else{
+            typeOfEventW=false;
+        }
+        if (angle < 0) { // эти два ифа добавлены в связи с багом. если изначально мышь слево, то происходито баg
+            angle += 360;
+        }
+        if (angle > 360) {
+            angle -= 360;
+        }
     }
+
     public int[] getTankX() {
         int w = image.getWidth();
         int h = image.getHeight();

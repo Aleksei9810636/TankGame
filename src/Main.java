@@ -24,7 +24,7 @@ public class Main {
 
 
 
-        BufferedImage SteelBox= ImageIO.read(new File("imgs\\SteelBox.jpg"));
+        BufferedImage SteelBox= ImageIO.read(new File("imgs\\TimeBox1.png"));
         BufferedImage WoodBox= ImageIO.read(new File("imgs\\WoodBox.jpg"));
         Scanner scanner = new Scanner(new File("src\\Time.txt"));
         PrintWriter out = new PrintWriter("src\\Time.txt");
@@ -43,10 +43,10 @@ public class Main {
         ArrayList<Wall> walls=new ArrayList<>();
         Wall wall1=new Wall(1000, 200, 100, 200,WoodBox, 300);
         Wall wall6=new Wall(1000, 600, 100, 200, WoodBox, 300);
-        Wall wall2=new Wall(0,0, hor, 51, SteelBox, 100000);        // края
-        Wall wall3=new Wall(hor-51,0,51,vert,SteelBox, 100000 );
-        Wall wall4=new Wall(0,vert-86, hor, 51, SteelBox,10000);
-        Wall wall5=new Wall(-300, -200, 51, vert+200, SteelBox, 100000 );
+        Wall wall2=new Wall(0,0, hor, 100, SteelBox, 100000);        // края
+        Wall wall3=new Wall(hor-100,0,100,vert,SteelBox, 100000 );
+        Wall wall4=new Wall(0,vert-100, hor, 100, SteelBox,10000);
+        Wall wall5=new Wall(-300, -200, 100, vert+200, SteelBox, 100000 );
         Wall wall7=new Wall(1000, 150, 100, (int)vert-100, SteelBox, 10000);
 
         walls.add(wall1);

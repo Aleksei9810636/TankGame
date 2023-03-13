@@ -14,6 +14,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     String stage="start";                 //"game";   //"menu";
     BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
+    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
+
     Tank tank1;
     Tank tank2;
     Gun gun1;
@@ -242,7 +244,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     }
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
         if (time > 3000 && sumBotTank < 1) {
-            BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
+            BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
             BotTank botTank1 = new BotTank(550, 111 * sumBotTank + 400, 1, 0.05, 900, 3, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, tank1, tank2);
@@ -515,6 +517,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         @Override
         protected void paintComponent (Graphics g) {
             super.paintComponent(g);
+//            g.drawImage(imageFon, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
+            g.drawImage(imageFon, 0, 0,this.getWidth(), this.getHeight(), null );
+
+
 
             UPTime(g);
 
@@ -574,6 +580,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 g.drawPolygon(tank1.getTankX(), tank1.getTankY(), 4);
                 g.setColor(new Color(6, 214, 241, 255));
                 g.drawLine((int) (tank1.getTankX(1)), (int) tank1.getTankY(1), (int) tank1.getTankX(2), (int) tank1.getTankY(2));
+
                 //g.drawLine((int)(tank1.getTankX(2)), (int)tank1.getTankY(2), (int)tank1.getTankX(3), (int)tank1.getTankY(3));
             } else
             {

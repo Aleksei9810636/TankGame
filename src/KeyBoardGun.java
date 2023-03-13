@@ -10,7 +10,7 @@ public class KeyBoardGun extends GameObject {
         double Angle=-90;
         boolean typeOfEvent4;
         boolean typeOfEvent6;
-        BufferedImage image= ImageIO.read(new File("imgs\\gun.png"));
+        BufferedImage image= ImageIO.read(new File("imgs\\TAnkGun.png"));
 
     public KeyBoardGun(double VAngle) throws IOException {
         this.VAngle = VAngle;

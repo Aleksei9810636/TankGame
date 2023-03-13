@@ -10,7 +10,7 @@ public class Gun extends  GameObject {
     double Angle=-90;
     double MouseAngle;
     double TankVAngle;
-    BufferedImage image = ImageIO.read(new File("imgs\\redGun.png"));
+    BufferedImage image = ImageIO.read(new File("imgs\\TankGun.png"));
 
     public Gun(double AbcVAngle) throws IOException {
         this.AbcVAngle = AbcVAngle;
