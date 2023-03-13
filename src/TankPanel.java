@@ -12,9 +12,12 @@ import java.util.ArrayList;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
+    BufferedImage PausBotton = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
-    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
+//    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon2.jpg"));
+BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
+
 
     Tank tank1;
     Tank tank2;
@@ -22,11 +25,15 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     KeyBoardGun keyBoardGun;
     double MouseX;
     double MouseY;
+    double PanelWidth;
+    double PanelHeight;
+
     ArrayList<Bullet> bullets = new ArrayList<>();
     ArrayList<Wall> walls = new ArrayList<>();
     ArrayList<Wall> Startwalls;
     ArrayList<BotTank> BotTanks = new ArrayList<>();
     ArrayList<StringPaint> stringPaint= new ArrayList<>();
+    ArrayList<Button> buttons=new ArrayList<>();
     int sumBotTank = 0;
     long StartTime;
     long time;
@@ -61,6 +68,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.StartTime = StartTime;
         System.nanoTime();
         StringStartTime=0;
+
 
         threadMusic.start();
 //        thread.interrupt();          //  это остановит музыку
@@ -107,7 +115,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         @Override
         public void mouseReleased (MouseEvent e){              // хз что но похоже на отпускание
-//       System.out.println("mouseReleased");
+
     }
 
         @Override
@@ -128,6 +136,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         public void mouseMoved (MouseEvent e){             // движется и не зажата
         MouseX = e.getX();
         MouseY = e.getY();
+
     }
 
         @Override
@@ -236,6 +245,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         g.drawString(Integer.toString((int) (time / 1000)), 100, 100);
 
     }
+    public void ButtonControl(){
+        if(buttons.size()<2) {
+            Button button = new Button(PanelWidth * 0.5, 1, "pause", PausBotton, PausBotton);
+            buttons.add(button);
+        }
+
+
+
+    }
+
     public void UPgametime (Graphics g){
 
         gametime =5 ;
@@ -519,9 +538,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             super.paintComponent(g);
 //            g.drawImage(imageFon, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
             g.drawImage(imageFon, 0, 0,this.getWidth(), this.getHeight(), null );
-
-
-
+            PanelWidth=this.getWidth();
+            PanelHeight=this.getHeight();
             UPTime(g);
 
             if(time>500){
@@ -565,8 +583,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     }
                 }
 
+
                 for (int i = 0; i < walls.size(); i++) {
                     walls.get(i).paint(g);
+                }
+                for(int i=0; i<buttons.size(); i++){
+                    if(buttons.get(i).Name.equals("pause")){
+                        buttons.get(i).paint(g);
+                    }
                 }
                 for (int i = 0; i < BotTanks.size(); i++) {
                     BotTanks.get(i).UpdatePlace();
@@ -591,6 +615,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     g.drawImage(imagemenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
                 }
             }
+            ButtonControl();
         }
     }
 

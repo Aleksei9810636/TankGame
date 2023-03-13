@@ -38,7 +38,7 @@ public class Main {
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
         Tank tank1=new Tank(800,300, 1.5,  0.05, 1900, 50, 1);
         Tank tank2=new Tank(1800, 500, 1, 0.05, 900, 1050, 2);
-        Gun gun=new Gun(0.2);
+        Gun gun=new Gun(0.5);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.2);
         ArrayList<Wall> walls=new ArrayList<>();
         Wall wall1=new Wall(1000, 200, 100, 200,WoodBox, 300);
