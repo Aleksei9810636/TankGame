@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
-    BufferedImage PausBotton = ImageIO.read(new File("imgs\\PauseButton1.png"));
+    BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
+    BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton2.png"));
     BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
 //    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon2.jpg"));
@@ -110,6 +111,18 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
             Bullet bullet = new Bullet(tank1.x, tank1.y, gun1.Angle, 1);
             bullets.add(bullet);
         }
+            for(int i=0; i<buttons.size(); i++){
+                if(buttons.get(i).TypeMouse.equals("yes")){
+                    if(!stage.equals("menu")){
+                        stage="menu";
+                        System.out.println(32);
+                    }
+//                    if(stage.equals("menu")){
+//                        stage="game";
+//                    }
+                }
+            }
+
 
     }
 
@@ -136,6 +149,10 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
         public void mouseMoved (MouseEvent e){             // движется и не зажата
         MouseX = e.getX();
         MouseY = e.getY();
+            for(int i=0; i<buttons.size(); i++){
+                buttons.get(i).MouseX=MouseX;
+                buttons.get(i).MouseY=MouseY;
+            }
 
     }
 
@@ -247,7 +264,7 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
     }
     public void ButtonControl(){
         if(buttons.size()<2) {
-            Button button = new Button(PanelWidth * 0.5, 1, "pause", PausBotton, PausBotton);
+            Button button = new Button(PanelWidth * 0.5, 1, "pause", PausBotton1, PausBotton2);
             buttons.add(button);
         }
 
@@ -541,13 +558,21 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
             PanelWidth=this.getWidth();
             PanelHeight=this.getHeight();
             UPTime(g);
+            if(time<1500){
+                if(time>500){
+                    stage="menu";
+                }
+                if(time>1000){
+                    stage="game";
+                }
+            }
 
-            if(time>500){
-                stage="menu";
-            }
-            if(time>1000){
-                stage="game";
-            }
+
+
+
+
+
+
 
 
 
@@ -587,11 +612,11 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
                 for (int i = 0; i < walls.size(); i++) {
                     walls.get(i).paint(g);
                 }
-                for(int i=0; i<buttons.size(); i++){
-                    if(buttons.get(i).Name.equals("pause")){
-                        buttons.get(i).paint(g);
-                    }
-                }
+//                for(int i=0; i<buttons.size(); i++){
+//                    if(buttons.get(i).Name.equals("pause")){
+//                        buttons.get(i).paint(g);
+//                    }
+//                }
                 for (int i = 0; i < BotTanks.size(); i++) {
                     BotTanks.get(i).UpdatePlace();
                     BotTanks.get(i).paint(g);
@@ -616,6 +641,9 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
                 }
             }
             ButtonControl();
+            for(int i=0; i<buttons.size(); i++){
+                buttons.get(i).paint(g);
+            }
         }
     }
 

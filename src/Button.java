@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 public class Button {
     double x;
     double y;
+    double Width=80;
+    double Height=80;
     double MouseX;
     double MouseY;
     String Name;
@@ -19,9 +21,21 @@ public class Button {
         ClickImage = clickImage;
     }
     public  void  paint(Graphics g ){
-        if(TypeMouse.equals("No")){
-            g.drawImage(NormImage, (int) x, (int) y, 80, 80, null );
+        UPSituation();
+
+        if(TypeMouse.equals("no")){
+            g.drawImage(NormImage, (int) x, (int) y,(int) Width,(int) Height, null );
 //            System.out.println(x+" "+ y);
+        }
+        if(TypeMouse.equals("yes")){
+            g.drawImage(ClickImage, (int) x, (int) y,(int) Width,(int) Height, null );
+        }
+    }
+    public void UPSituation(){
+        if(MouseX>x && MouseX<x+Width && MouseY>y && MouseY<y+Height ){
+            TypeMouse="yes";
+        }else{
+            TypeMouse="no";
         }
     }
 }
