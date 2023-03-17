@@ -112,14 +112,17 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
             bullets.add(bullet);
         }
             for(int i=0; i<buttons.size(); i++){
+                int k=-1; // для того чтобы кнопка не нажималась много раз за один раз
                 if(buttons.get(i).TypeMouse.equals("yes")){
-                    if(!stage.equals("menu")){
+                    if(!stage.equals("menu") && k<0){
                         stage="menu";
+                        k+=1;
                         System.out.println(32);
                     }
-//                    if(stage.equals("menu")){
-//                        stage="game";
-//                    }
+                    if(stage.equals("menu") && k<0){
+                        stage="game";
+                        k++;
+                    }
                 }
             }
 
@@ -263,7 +266,7 @@ BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
 
     }
     public void ButtonControl(){
-        if(buttons.size()<2) {
+        if(buttons.size()<1) {
             Button button = new Button(PanelWidth * 0.5, 1, "pause", PausBotton1, PausBotton2);
             buttons.add(button);
         }
