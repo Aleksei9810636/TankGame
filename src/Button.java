@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 public class Button {
     double x;
     double y;
-    double Width=80;
-    double Height=80;
+    double Width=75;
+    double Height=75;
     double MouseX;
     double MouseY;
     String Name;

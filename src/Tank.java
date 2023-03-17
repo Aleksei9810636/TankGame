@@ -61,7 +61,6 @@ public class Tank extends GameObject {
         if (HitPoints <= 0) {
             g.setColor(new Color(0, 224, 205));
             g.fillRect(0, 0, 2000, 2000);
-
         }
         if (LastShotTime == 0) {
             g.drawString("Нажмите кнопку стрельбы, чтобы выстрелить", (int) (x - 50), (int) (y - 50));

@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
-    BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton2.png"));
+    BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
     BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
-//    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon2.jpg"));
-BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
+    BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
+//BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
 
 
     Tank tank1;
