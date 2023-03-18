@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 public class Button {
     double x;
     double y;
-    double Width=75;
-    double Height=75;
+    double Width;
+    double Height;
     double MouseX;
     double MouseY;
     String Name;
@@ -13,9 +13,11 @@ public class Button {
     BufferedImage NormImage;
     BufferedImage ClickImage;
 
-    public Button(double x, double y, String Name, BufferedImage normImage, BufferedImage clickImage) {
+    public Button(double x, double y, double Width, double Height, String Name, BufferedImage normImage, BufferedImage clickImage) {
         this.x = x;
         this.y = y;
+        this.Width=Width;
+        this.Height=Height;
         this.Name=Name;
         NormImage = normImage;
         ClickImage = clickImage;

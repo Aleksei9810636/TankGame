@@ -36,10 +36,10 @@ public class Main {
         int hor  = sSize.width;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
-        Tank tank1=new Tank(800,300, 1.5,  0.05, 900, 50, 1);
-        Tank tank2=new Tank(1800, 500, 1, 0.05, 900, 2500, 2);
-        Gun gun=new Gun(0.5);
-        KeyBoardGun keyBoardGun=new KeyBoardGun(0.2);
+        Tank tank1=new Tank(800,300, 2.5,  0.05, 900, 50, 1);
+        Tank tank2=new Tank(1800, 500, 2, 0.05, 900, 2500, 1);
+        Gun gun=new Gun(1);
+        KeyBoardGun keyBoardGun=new KeyBoardGun(0.7);
         ArrayList<Wall> walls=new ArrayList<>();
         Wall wall1=new Wall(1000, 200, 100, 500,WoodBox, 700);
         Wall wall6=new Wall(1000, 600, 100, 300, WoodBox, 500);

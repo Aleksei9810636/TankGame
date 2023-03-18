@@ -7,10 +7,12 @@ import java.io.IOException;
 
 
 public class Tank extends GameObject {
+    String StagePanel="game";
     double x;
     double y;
     double VAngle;
     double vy;
+    double VMaxUze; // для чита
     double VMax;
     double a;
     double angle = -90;
@@ -26,12 +28,13 @@ public class Tank extends GameObject {
     boolean typeOfEventD;
     boolean typeOfEventCheat = false;
 
-    public Tank(double x, double y, double VMax, double a, double HitPoints, double laja, double RechargeTime) throws IOException {
+    public Tank(double x, double y, double VMaxUze, double a, double HitPoints, double laja, double RechargeTime) throws IOException {
         this.x = x;
         this.y = y;
         this.VAngle = 0;
         this.vy = 0;
-        this.VMax = VMax;
+        this.VMaxUze = VMaxUze;
+        VMax=VMaxUze;
         this.a = a;
         this.HitPoints = HitPoints;
         this.laja = laja;
@@ -59,8 +62,7 @@ public class Tank extends GameObject {
         g.fillRect((int) (laja * 0.5), 900, (int) (HitPoints * 0.5), 10);
         g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 880);
         if (HitPoints <= 0) {
-            g.setColor(new Color(0, 224, 205));
-            g.fillRect(0, 0, 2000, 2000);
+            StagePanel="menu";
         }
         if (LastShotTime == 0) {
             g.drawString("Нажмите кнопку стрельбы, чтобы выстрелить", (int) (x - 50), (int) (y - 50));
@@ -84,7 +86,7 @@ public class Tank extends GameObject {
         y -= vy * Math.cos(angleInRadians);
         angle += VAngle * 1;
         if (typeOfEventW != typeOfEventS) {
-            if ((Math.abs(vy)) < VMax) {
+            if ((Math.abs(vy)) < VMaxUze) {
                 if (typeOfEventW) {
                     vy = vy + a;
                 } else {
@@ -101,7 +103,7 @@ public class Tank extends GameObject {
 
 
         if (typeOfEventA != typeOfEventD) {
-            if ((Math.abs(VAngle)) < VMax * 0.5) {             // ВНИМАНИЕ какой то ... догадался сделать угловую и
+            if ((Math.abs(VAngle)) < VMaxUze * 0.5) {             // ВНИМАНИЕ какой то ... догадался сделать угловую и
                 if (typeOfEventA) {                      //линейную максимальную скорость одинаковыми
                     VAngle -= a;
                 } else {
@@ -116,7 +118,9 @@ public class Tank extends GameObject {
             }
         }
         if(typeOfEventCheat){
-            VMax=2.5;
+            VMaxUze =2.5;
+        }else{
+            VMaxUze = VMax;
         }
     }
 
