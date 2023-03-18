@@ -42,16 +42,23 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     long gametime=0;
 
     Thread threadMusic = new Thread(() -> {
-        while(true) {
-            new MakeSound().playSound("music\\silent-wood.wav");
-            System.out.println("audio file finished!");
-            //threadMusic.start();  вставь это туда, где должна заиграть музыка
-        }
+//        while(true) {
+//            new MakeSound().playSound("music\\silent-wood.wav");
+//            System.out.println("audio file finished!");
+//            //threadMusic();  вставь это туда, где должна заиграть музыка
+//        }
     });
     void threadYest_probitie(){
         new Thread(() -> {
-            new MakeSound().playSound("music\\Yest_probitie.wav");
+//            new MakeSound().playSound("music\\Yest_probitie.wav");
             //threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
+            System.out.println("audio file finished!");
+        }).start();
+    }
+    void tread_BOOM(){
+        new Thread(() -> {
+            new MakeSound().playSound("music\\BOOM.wav");
+            //thread_BOOM;  вставь это туда, где должна заиграть музыка
             System.out.println("audio file finished!");
         }).start();
     }
@@ -110,6 +117,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             tank1.LastShotTime = System.currentTimeMillis();
             Bullet bullet = new Bullet(tank1.x, tank1.y, gun1.Angle, 1);
             bullets.add(bullet);
+            System.out.println(4343);
+            tread_BOOM();
         }
             for(int i=0; i<buttons.size(); i++){
                 int k=-1; // для того чтобы кнопка не нажималась много раз за один раз
@@ -175,11 +184,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (e.getKeyCode() == 192) {                      // фигово реализоваанное подключение фигово реализованного чита
                 tank1.typeOfEventCheat = true;
             }
-            if (e.getKeyCode() == 39) {
+            if (e.getKeyCode() == 104) {
                 if ((System.currentTimeMillis() - tank2.LastShotTime) * 0.001 > tank2.RechargeTime) {
                     tank2.LastShotTime = System.currentTimeMillis();
                     Bullet bullet = new Bullet(tank2.x, tank2.y, keyBoardGun.Angle, 2);
                     bullets.add(bullet);
+                    tread_BOOM();
                 }
             }
             if (e.getKeyCode() == 100) {
