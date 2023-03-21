@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
-    BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\WELCOME.jpg"));
+    BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
+    BufferedImage ReplyButton = ImageIO.read(new File("imgs\\Reply.jpg"));
     BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
@@ -46,6 +47,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     long StringStartTime;
     long gametime=0;
     Button buttonInBattle=null;
+    Button buttonReply=null;
+
 
     Thread threadMusic = new Thread(() -> {
 //        while(true) {
@@ -58,21 +61,22 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         new Thread(() -> {
 //            new MakeSound().playSound("music\\Yest_probitie.wav");
             //threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
-            System.out.println("audio file finished!");
+//            System.out.println("audio file finished!");
         }).start();
     }
     void tread_BOOM(){
         new Thread(() -> {
             new MakeSound().playSound("music\\BOOM.wav");
             //thread_BOOM;  вставь это туда, где должна заиграть музыка
-            System.out.println("audio file finished!");
+//            System.out.println("audio file finished!");
         }).start();
     }
 
 
     public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun, long StartTime) throws IOException {       //Это вероятно не надо
         this.UzeTank1 = tank1;
-        this.Tank1=tank1;
+        Tank Tank1Del=new Tank(tank1.x, tank1.y, tank1.VMaxUze, tank1.a, tank1.HitPoints, tank1.laja, tank1.RechargeTime);
+        this.Tank1=Tank1Del;
         this.gun1 = gun;
         this.UzeTank2 = tank2;
         this.Tank2=tank2;
@@ -125,7 +129,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             UzeTank1.LastShotTime = System.currentTimeMillis();
             Bullet bullet = new Bullet(UzeTank1.x, UzeTank1.y, gun1.Angle, 1);
             bullets.add(bullet);
-            System.out.println(4343);
             tread_BOOM();
         }
             for(int i=0; i<buttons.size(); i++){
@@ -134,7 +137,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     if(!stage.equals("menu") && k<0){
                         stage="menu";
                         k+=1;
-                        System.out.println(32);
                     }
                     if(stage.equals("menu") && k<0){
                         stage="game";
@@ -142,7 +144,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     }
                 }
                 if(buttons.get(i).Name.equals("InBattle") && buttons.get(i).TypeMouse.equals("yes")){
-                    stage="menu";
+                    stage="game";
+                }
+                if(buttons.get(i).Name.equals("reply") && buttons.get(i).TypeMouse.equals("yes")){
+                    GameReply();
                 }
             }
 
@@ -294,14 +299,24 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             buttons.add(buttonInBattle);
         }
         if(!stage.equals("StartMenu")){
-            System.out.println(75);
             if(buttonInBattle!=null) {
                 buttons.remove(buttonInBattle);
             }
         }
+
         if(buttons.size()<1 && !stage.equals("StartMenu")) {
             Button button = new Button(PanelWidth * 0.5, 1,75,75,"pause", PausBotton1, PausBotton2);
             buttons.add(button);
+        }
+
+        if(stage.equals("menu") && buttons.size()<2){
+            buttonReply = new Button(PanelWidth * 0.5, PanelHeight*0.3,75,75,"reply", ReplyButton, ReplyButton);
+            buttons.add(buttonReply);
+        }
+        if(!stage.equals("menu")){
+            if(ReplyButton!=null) {
+                buttons.remove(buttonReply);
+            }
         }
 
 
@@ -332,6 +347,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             }
         }
 
+    }
+
+    public  void GameReply (){
+        UzeTank1=Tank1;
+        UzeTank2=Tank2;
     }
 
 
@@ -676,7 +696,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     g.drawImage(imagemenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
                 }
                 if(stage.equals("StartMenu")){
-                    g.drawImage(imageStartMenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
+                    g.drawImage(imageStartMenu, 0, 0,this.getWidth(), this.getHeight(),null );
                 }
             }
             ButtonControl();
