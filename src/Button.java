@@ -9,7 +9,7 @@ public class Button {
     double MouseX;
     double MouseY;
     String Name;
-    String TypeMouse = "No";
+    String TypeMouse = "no";
     BufferedImage NormImage;
     BufferedImage ClickImage;
 

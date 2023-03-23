@@ -79,7 +79,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.Tank1=Tank1Del;
         this.gun1 = gun;
         this.UzeTank2 = tank2;
-        this.Tank2=tank2;
+        Tank Tank2Del=new Tank(tank2.x, tank2.y, tank2.VMaxUze, tank2.a, tank2.HitPoints, tank2.laja, tank2.RechargeTime);
+        this.Tank2=Tank2Del;
         this.keyBoardGun = keyBoardGun;
         this.Startwalls = walls;
         WallsDifferentiation();
@@ -125,7 +126,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         @Override
         public void mousePressed (MouseEvent e){               //на нажатие
 //        System.out.println("mousePressed");
-        if ((System.currentTimeMillis() - UzeTank1.LastShotTime) * 0.001 > UzeTank1.RechargeTime && stage.equals("game")) {
+            boolean FlagTypeMouse=true;
+            for(int i = 0 ; i<buttons.size(); i++){
+                if(buttons.get(i).TypeMouse.equals("yes")){
+                    FlagTypeMouse=false;
+                }
+            }
+
+        if ((System.currentTimeMillis() - UzeTank1.LastShotTime) * 0.001 > UzeTank1.RechargeTime && stage.equals("game") && FlagTypeMouse) {
             UzeTank1.LastShotTime = System.currentTimeMillis();
             Bullet bullet = new Bullet(UzeTank1.x, UzeTank1.y, gun1.Angle, 1);
             bullets.add(bullet);
@@ -147,7 +155,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     stage="game";
                 }
                 if(buttons.get(i).Name.equals("reply") && buttons.get(i).TypeMouse.equals("yes")){
-                    GameReply();
+                    try {
+                        GameReply();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
 
@@ -327,7 +339,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         gametime =5 ;
         g.drawString(Integer.toString((int) (time / 1000)), 800, 100);
-
     }
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
         if (time > 3000 && sumBotTank < 0) {
@@ -349,10 +360,18 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     }
 
-    public  void GameReply (){
+    public  void GameReply () throws IOException {
+        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
         UzeTank1=Tank1;
+        Tank1=Tank1Del;
+
+        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
         UzeTank2=Tank2;
+        Tank2=Tank2Del;
+
+
     }
+
 
 
         public void updateCollisions (Graphics g){
