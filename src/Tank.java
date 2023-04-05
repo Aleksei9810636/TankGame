@@ -65,6 +65,7 @@ public class Tank extends GameObject {
             StagePanel="menu";
         }
         if (LastShotTime == 0) {
+
             g.drawString("Нажмите кнопку стрельбы, чтобы выстрелить", (int) (x - 50), (int) (y - 50));
         } else {
             if ((((System.currentTimeMillis() - LastShotTime) * 0.001) % 1000) < RechargeTime) {

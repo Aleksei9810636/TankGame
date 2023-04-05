@@ -19,6 +19,7 @@ public class KeyBoardGun extends GameObject {
     public void paint(Graphics g, double x, double y) {
             BufferedImage img=rotateImage(image, Angle);
             g.drawImage(img, (int) (x-img.getWidth()*0.5), (int) (y-img.getHeight()*0.5), null);
+            g.drawLine((int)x, (int)y, (int)(x+1000*Math.sin(Math.toRadians(Angle))), (int)(y-1000*Math.cos(Math.toRadians(Angle)))) ;
         }
         public void UpdatePlace(){
         if(typeOfEvent4){

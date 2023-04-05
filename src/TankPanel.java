@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
     BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
-    BufferedImage ReplyButton = ImageIO.read(new File("imgs\\Reply.jpg"));
+    BufferedImage ReplyButton1 = ImageIO.read(new File("imgs\\Reply1.jpg"));
+    BufferedImage ReplyButton2 = ImageIO.read(new File("imgs\\Reply2.jpg"));
     BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
@@ -322,11 +323,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
 
         if(stage.equals("menu") && buttons.size()<2){
-            buttonReply = new Button(PanelWidth * 0.5, PanelHeight*0.3,75,75,"reply", ReplyButton, ReplyButton);
+            buttonReply = new Button(PanelWidth * 0.5, PanelHeight*0.3,75,75,"reply", ReplyButton1, ReplyButton2);
             buttons.add(buttonReply);
         }
         if(!stage.equals("menu")){
-            if(ReplyButton!=null) {
+            if(buttonReply!=null) {
                 buttons.remove(buttonReply);
             }
         }
@@ -394,16 +395,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (P_tank1.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                 if (P_tank1.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy) + 1;
+                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy) ;
                 }
                 if (P_tank1.intersects(wall.x, wall.y, 1, wall.height)) {
-                    this.UzeTank1.x -= Math.abs(this.UzeTank1.vy) + 1;
+                    this.UzeTank1.x -= Math.abs(this.UzeTank1.vy) ;
                 }
                 if (P_tank1.intersects(wall.x, wall.y, wall.width, 1)) {
-                    this.UzeTank1.y -= Math.abs(this.UzeTank1.vy) + 1;
+                    this.UzeTank1.y -= Math.abs(this.UzeTank1.vy) ;
                 }
                 if (P_tank1.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                    this.UzeTank1.x += Math.abs(this.UzeTank1.vy) + 1;
+                    this.UzeTank1.x += Math.abs(this.UzeTank1.vy) ;
                 }
                 g.setColor(new Color(55, 250, 31, 255));
                 g.fillRect(10, 10, 1200, 20);
@@ -411,16 +412,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (P_tank2.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                 if (P_tank2.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank2.y += Math.abs(this.UzeTank2.vy) + 1;
+                    this.UzeTank2.y += Math.abs(this.UzeTank2.vy) ;
                 }
                 if (P_tank2.intersects(wall.x, wall.y, 1, wall.height)) {
-                    this.UzeTank2.x -= Math.abs(this.UzeTank2.vy) + 1;
+                    this.UzeTank2.x -= Math.abs(this.UzeTank2.vy) ;
                 }
                 if (P_tank2.intersects(wall.x, wall.y, wall.width, 1)) {
-                    this.UzeTank2.y -= Math.abs(this.UzeTank2.vy) + 1;
+                    this.UzeTank2.y -= Math.abs(this.UzeTank2.vy) ;
                 }
                 if (P_tank2.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                    this.UzeTank2.x += Math.abs(this.UzeTank2.vy) + 1;
+                    this.UzeTank2.x += Math.abs(this.UzeTank2.vy) ;
                 }
                 g.setColor(new Color(55, 250, 31, 255));
                 g.fillRect(10, 10, 1200, 20);
@@ -432,16 +433,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 if (P_botTank.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                     if (P_botTank.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                        this.BotTanks.get(j).y += Math.abs(this.UzeTank1.vy) + 1;
+                        this.BotTanks.get(j).y += Math.abs(this.UzeTank1.vy) ;
                     }
                     if (P_botTank.intersects(wall.x, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x -= Math.abs(this.UzeTank1.vy) + 1;
+                        this.BotTanks.get(j).x -= Math.abs(this.UzeTank1.vy) ;
                     }
                     if (P_botTank.intersects(wall.x, wall.y, wall.width, 1)) {
-                        this.BotTanks.get(j).y -= Math.abs(this.UzeTank1.vy) + 1;
+                        this.BotTanks.get(j).y -= Math.abs(this.UzeTank1.vy) ;
                     }
                     if (P_botTank.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x += Math.abs(this.UzeTank1.vy) + 1;
+                        this.BotTanks.get(j).x += Math.abs(this.UzeTank1.vy) ;
                     }
                 }
             }
@@ -581,28 +582,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            }
 
             if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
-                for (int v = 1; v < 5; v++) {
-                    int nextv;
-                    if (v == 4) {
-                        nextv = 1;
-                    } else {
-                        nextv = v + 1;
-                    }
-                    int[] TankX = UzeTank2.getTankX(v, nextv);
-                    int[] TankY = UzeTank2.getTankY(v, nextv);
-                    Polygon P_t2 = new Polygon(TankX, TankY, 2);
-                    if (P_t2.intersects(bullet.x, bullet.y, 10, 10) && bullet.IndicationTank != 2) {
-
-                        StringPaint stringPaint2 = new StringPaint(Integer.toString(v) + nextv, 1800, 500, 2500);
-                        stringPaint.add(stringPaint2);
-                        this.UzeTank2.HitPoints -= bullets.get(i).Damage;
-                        bullets.remove(i);
-                        if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                            break;
-                        } else {
-                            i -= 1;
-                        }
-                    }
+                this.UzeTank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                bullets.remove(i);
+                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                    break;
+                } else {
+                    i -= 1;
                 }
             }
 
