@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
     BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
-    BufferedImage ReplyButton1 = ImageIO.read(new File("imgs\\Reply1.jpg"));
-    BufferedImage ReplyButton2 = ImageIO.read(new File("imgs\\Reply2.jpg"));
+    BufferedImage ReplyButton1 = ImageIO.read(new File("imgs\\NeonReply1.png"));
+    BufferedImage ReplyButton2 = ImageIO.read(new File("imgs\\NeonReply2.png"));
     BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
@@ -323,7 +323,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
 
         if(stage.equals("menu") && buttons.size()<2){
-            buttonReply = new Button(PanelWidth * 0.5, PanelHeight*0.3,75,75,"reply", ReplyButton1, ReplyButton2);
+            buttonReply = new Button(PanelWidth * 0.5-200, 10,75,75,"reply", ReplyButton1, ReplyButton2);
             buttons.add(buttonReply);
         }
         if(!stage.equals("menu")){
@@ -582,7 +582,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            }
 
             if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
-                this.UzeTank1.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                this.UzeTank2.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
                 bullets.remove(i);
                 if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
                     break;
