@@ -13,6 +13,8 @@ import java.util.ArrayList;
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
     BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
+    BufferedImage Start1on1button1 = ImageIO.read(new File("imgs\\1on1version1.png"));
+    BufferedImage Start1on1button2 = ImageIO.read(new File("imgs\\1on1version2.png"));
     BufferedImage ReplyButton1 = ImageIO.read(new File("imgs\\NeonReply1.png"));
     BufferedImage ReplyButton2 = ImageIO.read(new File("imgs\\NeonReply2.png"));
     BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
@@ -49,6 +51,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     long gametime=0;
     Button buttonInBattle=null;
     Button buttonReply=null;
+    Button buttonStart1on1=null;
+
 
 
     Thread threadMusic = new Thread(() -> {
@@ -161,6 +165,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                }
+                if(buttons.get(i).Name.equals("Start1on1") && buttons.get(i).TypeMouse.equals("yes")){
+                    System.out.println("Start1on1");
                 }
             }
 
@@ -310,11 +317,17 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             Button buttonInBattle0=new Button(PanelWidth * 0.5-200, 10, 400, 200, "InBattle", imageButton1ToBattle, imageButton1ToBattle);
             buttonInBattle = buttonInBattle0;
             buttons.add(buttonInBattle);
-        }
-        if(!stage.equals("StartMenu")){
+        }if(!stage.equals("StartMenu")){
             if(buttonInBattle!=null) {
                 buttons.remove(buttonInBattle);
             }
+        }
+
+        if(stage.equals("StartMenu") && buttons.size()<2){        // старт 1 на 1
+            buttonStart1on1 = new Button(PanelWidth * 0.5-150, PanelHeight*0.5-50,300,100,"Start1on1", Start1on1button1 , Start1on1button2);
+            buttons.add(buttonStart1on1);
+        }if(!stage.equals("StartMenu")){
+            buttons.remove(buttonStart1on1);
         }
 
         if(buttons.size()<1 && !stage.equals("StartMenu")) {
@@ -369,8 +382,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
         UzeTank2=Tank2;
         Tank2=Tank2Del;
-
-
     }
 
 
