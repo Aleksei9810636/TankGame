@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,7 +38,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     double MouseY;
     double PanelWidth;
     double PanelHeight;
-
     ArrayList<Bullet> bullets = new ArrayList<>();
     ArrayList<Wall> walls = new ArrayList<>();
     ArrayList<Wall> Startwalls;
@@ -52,6 +52,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     Button buttonInBattle=null;
     Button buttonReply=null;
     Button buttonStart1on1=null;
+    FileWriter writer=new FileWriter("file\\file.txt", true);
 
 
 
@@ -62,6 +63,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            //threadMusic();  вставь это туда, где должна заиграть музыка
 //        }
     });
+    private File f1;
+
     void threadYest_probitie(){
         new Thread(() -> {
 //            new MakeSound().playSound("music\\Yest_probitie.wav");
@@ -126,7 +129,21 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         @Override
         public void mouseClicked (MouseEvent e){              // на отпускание
-    }
+            // запись всей строки
+            String text = "Aleksei!";
+            try {
+                writer.write(text);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                writer.flush();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            System.out.println("Cliced");
+        }
+
 
         @Override
         public void mousePressed (MouseEvent e){               //на нажатие
@@ -176,7 +193,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         @Override
         public void mouseReleased (MouseEvent e){              // хз что но похоже на отпускание
-
     }
 
         @Override

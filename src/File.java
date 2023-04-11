@@ -1,28 +1,30 @@
-import java.io.*;
-
-public class File {
-double ProgramTime;
-    public File(double ProgramTime) {
-        this.ProgramTime=ProgramTime;
-    }
-
-    public static void main(String[] args) {
-
-
-        try(FileWriter writer = new FileWriter("src/Time.txt", true))
-        {
-            // запись всей строки
-            String text = "Hello Gold!";
-            writer.write(text);
-            // запись по символам
-            writer.append('\n');
+//import java.io.FileWriter;
+//import java.io.IOException;
+//
+//public interface File {
+//    interface FileWrite() {
+//        FileWriter writer;
+//
+//        static {
+//            try {
+//                writer = new FileWriter("file.txt", true);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        try () {
+//            // запись всей строки
+//            String text = "Hello Gold!";
+//            writer.write(text);
+//            // запись по символам
+//            writer.append('\n');
 //            writer.append('E');
-
-            writer.flush();
-        }
-        catch(IOException ex){
-
-            System.out.println(ex.getMessage());
-        }
-    }
-}
+//
+//            writer.flush();
+//        } catch (IOException ex) {
+//
+//            System.out.println(ex.getMessage() + " это какая то  ошибка в file");
+//        }
+//    }
+//}
+//}
