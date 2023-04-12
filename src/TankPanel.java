@@ -7,12 +7,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
+    String User="gamer";
     BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
     BufferedImage Start1on1button1 = ImageIO.read(new File("imgs\\1on1version1.png"));
     BufferedImage Start1on1button2 = ImageIO.read(new File("imgs\\1on1version2.png"));
@@ -24,6 +27,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
     BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
+    BufferedImage TestWall = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
 //BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
     Tank Tank1;
     Tank Tank2;
@@ -53,6 +57,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     Button buttonReply=null;
     Button buttonStart1on1=null;
     FileWriter writer=new FileWriter("file\\file.txt", true);
+    FileReader reader = new FileReader("file\\file.txt");
+    Scanner scanner=new Scanner(reader);
 
 
 
@@ -63,13 +69,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            //threadMusic();  вставь это туда, где должна заиграть музыка
 //        }
     });
-    private File f1;
-
     void threadYest_probitie(){
         new Thread(() -> {
-//            new MakeSound().playSound("music\\Yest_probitie.wav");
-            //threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
-//            System.out.println("audio file finished!");
+            new MakeSound().playSound("music\\Yest_probitie.wav");
+           // threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
+            System.out.println("audio file finished!");
         }).start();
     }
     void tread_BOOM(){
@@ -130,18 +134,35 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         @Override
         public void mouseClicked (MouseEvent e){              // на отпускание
             // запись всей строки
-            String text = "Aleksei!";
-            try {
-                writer.write(text);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+//            try {
+//                writer.write("A\n");
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//            try {
+//                writer.flush();
+//            } catch (IOException ex) {
+//                throw new RuntimeException(ex);
+//            }
+
+            int i = 1;
+
+//            while (scanner.hasNextLine()) {
+//                System.out.println(i + " : " + scanner.nextLine());
+//                i++;
+//            }
+            if(User.equals("creator")){
+                System.out.println("x "+e.getX()+ "      y "+e.getY());
+                Wall wall = null;
+                try {
+                    wall = new Wall(e.getX(),e.getY(), 75, 75, TestWall, 120);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                walls.add(wall);
             }
-            try {
-                writer.flush();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            System.out.println("Cliced");
+
         }
 
 
@@ -261,6 +282,18 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
 
 
+        if (e.getID() == KeyEvent.KEY_PRESSED){            //  creator              работает только при нажатии
+            if (e.getKeyChar() == ']') {
+                User="creator";
+            }
+        }
+        if (e.getID() == KeyEvent.KEY_RELEASED) {
+            if (e.getKeyChar() == ']') {
+                User="gamer";
+            }
+        }                                                   // end creator
+
+
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             if (e.getKeyChar() == 'w') {
                 UzeTank1.typeOfEventW = true;
@@ -371,7 +404,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         g.drawString(Integer.toString((int) (time / 1000)), 800, 100);
     }
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
-        if (time > 3000 && sumBotTank < 0) {
+        if (time > 3000 && sumBotTank < 2) {
             BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
             BotTank botTank1 = new BotTank(550, 111 * sumBotTank + 400, 1, 0.05, 900, 3, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
@@ -391,13 +424,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     }
 
     public  void GameReply () throws IOException {
-        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
-        UzeTank1=Tank1;
-        Tank1=Tank1Del;
+//        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
+//        UzeTank1=Tank1;
+//        Tank1=Tank1Del;
+//        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
+//        UzeTank2=Tank2;
+//        Tank2=Tank2Del;
 
-        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
-        UzeTank2=Tank2;
-        Tank2=Tank2Del;
+
+
+
     }
 
 
@@ -735,5 +771,6 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 buttons.get(i).paint(g);
             }
         }
+
     }
 
