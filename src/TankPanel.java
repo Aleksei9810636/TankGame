@@ -160,7 +160,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+                System.out.println(walls.size());
                 walls.add(wall);
+                System.out.println(walls.size());
             }
 
         }
