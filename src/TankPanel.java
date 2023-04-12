@@ -155,8 +155,36 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if(User.equals("creator")){
                 System.out.println("x "+e.getX()+ "      y "+e.getY());
                 Wall wall = null;
+                int variationx=e.getX();
+                int variationy=e.getY();
+                int biteJ=0;
+                for(int j=0; j< walls.size(); i++){
+                    Wall w=walls.get(j);
+                    Wall bite=walls.get(biteJ);
+//                    if(     ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+//                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<2*w.SizeBoxX
+//                            &&
+//                            false
+//                        &&
+//                            ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+//                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<=
+//                            ((bite.x-bite.SizeBoxX/2)-e.getX())*((bite.x-bite.SizeBoxX/2)-e.getX())+
+//                            ((bite.y-bite.SizeBoxY/2)-e.getY())*((bite.y-bite.SizeBoxY/2)-e.getY())
+//                    ){
+//                        biteJ=j;
+//                        if(e.getX()>w.x+w.SizeBoxX){
+//                            variationx=w.x+w.SizeBoxX;
+//                            variationy=w.y;
+//                        }
+//                        if(e.getX()<w.x){
+//                            variationx=w.x-w.SizeBoxX;
+//                            variationy=w.y;
+//                        }
+//                    }
+                }
+
                 try {
-                    wall = new Wall(e.getX(),e.getY(), 75, 75, TestWall, 120);
+                    wall = new Wall(variationx,variationy, 75, 75, TestWall, 120);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -406,7 +434,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         g.drawString(Integer.toString((int) (time / 1000)), 800, 100);
     }
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
-        if (time > 3000 && sumBotTank < 2) {
+        if (time > 3000 && sumBotTank < 0) {
             BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
             BotTank botTank1 = new BotTank(550, 111 * sumBotTank + 400, 1, 0.05, 900, 3, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);

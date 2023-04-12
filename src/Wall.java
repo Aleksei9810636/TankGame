@@ -11,8 +11,6 @@ public class Wall {
     int y;
     int width;
     int height;
-    int UnitX;
-    int UnitY;
     int SizeBoxX=75;
     int SizeBoxY=75;
     double BoxHP;

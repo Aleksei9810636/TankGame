@@ -32,7 +32,7 @@ public class Main {
         StartTime=System.currentTimeMillis();
 
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
-        int vert = sSize.height-500;
+        int vert = sSize.height-400;
         int hor  = sSize.width;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
