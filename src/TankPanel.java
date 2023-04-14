@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
     String stage="start";                 //"game";   //"menu";
     String User="gamer";
@@ -59,6 +61,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     FileWriter writer=new FileWriter("file\\file.txt", true);
     FileReader reader = new FileReader("file\\file.txt");
     Scanner scanner=new Scanner(reader);
+    int[] i1=new int[]{1, 1, 100, 100};
+    int[] i2=new int[]{1, 100, 100, 1};
+
+    Polygon ploika= new Polygon(i1, i2, 4);
 
 
 
@@ -133,6 +139,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
         @Override
         public void mouseClicked (MouseEvent e){              // на отпускание
+
+
+
+
             // запись всей строки
 
 //            try {
@@ -146,51 +156,108 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //                throw new RuntimeException(ex);
 //            }
 
-            int i = 1;
+//            int i = 1;
 
 //            while (scanner.hasNextLine()) {
 //                System.out.println(i + " : " + scanner.nextLine());
-//                i++;
 //            }
             if(User.equals("creator")){
-                System.out.println("x "+e.getX()+ "      y "+e.getY());
+                System.out.println("mouseClicked: "+ "("+e.getX()+";" + e.getY()+")");
                 Wall wall = null;
                 int variationx=e.getX();
                 int variationy=e.getY();
                 int biteJ=0;
-                for(int j=0; j< walls.size(); i++){
+                for(int j=0; j< walls.size(); j++){
                     Wall w=walls.get(j);
                     Wall bite=walls.get(biteJ);
-//                    if(     ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
-//                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<2*w.SizeBoxX
-//                            &&
-//                            false
-//                        &&
-//                            ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+
+//                    if( ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+//                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<4*w.SizeBoxX*2*w.SizeBoxX){
+//                        System.out.println("первое усл");
+//                    }
+//                    if(((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
 //                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<=
 //                            ((bite.x-bite.SizeBoxX/2)-e.getX())*((bite.x-bite.SizeBoxX/2)-e.getX())+
-//                            ((bite.y-bite.SizeBoxY/2)-e.getY())*((bite.y-bite.SizeBoxY/2)-e.getY())
-//                    ){
-//                        biteJ=j;
-//                        if(e.getX()>w.x+w.SizeBoxX){
-//                            variationx=w.x+w.SizeBoxX;
-//                            variationy=w.y;
-//                        }
-//                        if(e.getX()<w.x){
-//                            variationx=w.x-w.SizeBoxX;
-//                            variationy=w.y;
-//                        }
+//                                    ((bite.y-bite.SizeBoxY/2)-e.getY())*((bite.y-bite.SizeBoxY/2)-e.getY())){
+//                        System.out.println("второе усл");
 //                    }
+
+
+
+
+
+                    if(     ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<4*w.SizeBoxX*2*w.SizeBoxX
+                        &&
+                            ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
+                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<=
+                            ((bite.x-bite.SizeBoxX/2)-e.getX())*((bite.x-bite.SizeBoxX/2)-e.getX())+
+                            ((bite.y-bite.SizeBoxY/2)-e.getY())*((bite.y-bite.SizeBoxY/2)-e.getY())
+                    ){
+                        biteJ=j;
+                    }
+                }
+                Wall w =walls.get(biteJ);
+
+                if(e.getX()>w.x+w.SizeBoxX && e.getY()>w.y && e.getY()<w.y+w.SizeBoxY){
+                    variationx=w.x+w.SizeBoxX;
+                    variationy=w.y;
+                    System.out.println("right build: ("+w.x+";"+w.y+")");
+                }
+                if (e.getX() < w.x &&  e.getY()>w.y && e.getY()<w.y+w.SizeBoxY) {
+                    variationx = w.x - w.SizeBoxX;
+                    variationy = w.y;
+                    System.out.println("left build: ("+w.x+";"+w.y+")");
+                }
+                if(e.getY()>w.y+w.SizeBoxY && e.getX()>w.x && e.getX()<w.x+w.SizeBoxX){
+                    variationx=w.x;
+                    variationy=w.y+w.SizeBoxY;
+                    System.out.println("down build: ("+w.x+";"+w.y+")");
+                }if(e.getY()<w.y && e.getX()>w.x && e.getX()<w.x+w.SizeBoxX){
+                    variationx=w.x;
+                    variationy=w.y-w.SizeBoxY;
+                    System.out.println("up build: ("+w.x+";"+w.y+")");
                 }
 
-                try {
-                    wall = new Wall(variationx,variationy, 75, 75, TestWall, 120);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if(e.getButton()==3){
+                    int[] wallX = new  int[]{
+                            variationx+w.SizeBoxX,
+                            variationx,
+                            variationx,
+                            variationx+w.SizeBoxX
+                    };
+                    int[] wallY = new  int[]{
+                            variationy,
+                            variationy,
+                            variationy+w.SizeBoxY,
+                            variationy+w.SizeBoxY
+                    };
+
+                    ploika=new Polygon(wallX, wallY, 4);
                 }
-                System.out.println(walls.size());
-                walls.add(wall);
-                System.out.println(walls.size());
+
+
+                if(e.getButton()==1) {
+                    try {
+
+                        wall = new Wall(variationx, variationy, 75, 75, TestWall, 300);
+                        String str="Wall wall = new Wall("+variationx+", "+variationy+", "+"75, 75, TestWall, 300)";
+                        try {
+                            writer.write(str+"\n");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        try {
+                             writer.flush();
+                       } catch (IOException ex) {
+                          throw new RuntimeException(ex);
+                       }
+
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    walls.add(wall);
+                }
             }
 
         }
@@ -454,15 +521,44 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     }
 
     public  void GameReply () throws IOException {
-//        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
-//        UzeTank1=Tank1;
-//        Tank1=Tank1Del;
-//        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
-//        UzeTank2=Tank2;
-//        Tank2=Tank2Del;
+        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
+        UzeTank1=Tank1;
+        Tank1=Tank1Del;
+        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
+        UzeTank2=Tank2;
+        Tank2=Tank2Del;
 
+        walls=new ArrayList<>();
 
+        while (scanner.hasNextLine()) {             // бежим по строкам пока они есть
+            String s=scanner.nextLine();
+            if(s.startsWith("Wall wall = new Wall")){
 
+                BufferedImage nameImage= TestWall;
+
+                ArrayList<Integer> v = new ArrayList<>();
+
+                int NumberCin=0;
+                for(int i=0; i<s.length();i++){  // бежим по конкретной строке
+                    char c = s.charAt(i);
+                    String digit="";
+                    while(Character.isDigit(c)) {
+                        digit += c;
+                        i++;
+                        c=s.charAt(i);
+                    }
+                    if(!digit.equals("")) {
+                        v.add(parseInt(digit));
+                    }
+                }
+                if(v.size()==5) {
+                    Wall wall = new Wall(v.get(0), v.get(1), v.get(2), v.get(3), nameImage, v.get(4));
+                    walls.add(wall);
+                }else{
+                    System.out.println("Что то не так с базой данных стенок!!!");
+                }
+            }
+        }
 
     }
 
@@ -800,7 +896,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             for(int i=0; i<buttons.size(); i++){
                 buttons.get(i).paint(g);
             }
+
+            g.drawPolygon(ploika);
         }
+
 
     }
 

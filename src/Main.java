@@ -41,22 +41,22 @@ public class Main {
         Gun gun=new Gun(1);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.7);
         ArrayList<Wall> walls=new ArrayList<>();
-        Wall wall1=new Wall(400, 200, 1000, 101,WoodBox, 300);
-        Wall wall6=new Wall(400, 700, 1000, 101, WoodBox, 300);
-        Wall wall7=new Wall(500, 400, 800,200 , WoodBox, 300);
-
-        Wall wall2=new Wall(0,0, hor, 100, SteelBox, 100000);        // края
-        Wall wall3=new Wall(hor-100,0,100,vert,SteelBox, 100000 );         // края
-        Wall wall4=new Wall(0,vert-100, hor, 100, SteelBox,10000);             // края
-        Wall wall5=new Wall(-300, -200, 100, vert+200, SteelBox, 100000 );          // края
+        Wall wall1=new Wall(400, 200, 100, 101,WoodBox, 300);
+        Wall wall6=new Wall(750, 120, 100, 101, WoodBox, 300);
+        Wall wall7=new Wall(1000, 200, 100,100 , WoodBox, 300);
+//
+//        Wall wall2=new Wall(0,0, hor, 100, SteelBox, 100000);        // края
+//        Wall wall3=new Wall(hor-100,0,100,vert,SteelBox, 100000 );         // края
+//        Wall wall4=new Wall(0,vert-100, hor, 100, SteelBox,10000);             // края
+//        Wall wall5=new Wall(-300, -200, 100, vert+200, SteelBox, 100000 );          // края
 
 
         walls.add(wall1);
         walls.add(wall6);
-        walls.add(wall2);
-        walls.add(wall3);
-        walls.add(wall4);
-        walls.add(wall5);
+//        walls.add(wall2);
+//        walls.add(wall3);
+//        walls.add(wall4);
+//        walls.add(wall5);
         walls.add(wall7);
         // Создаем окно
         JFrame frame = new JFrame();
