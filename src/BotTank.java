@@ -24,11 +24,11 @@ public class BotTank extends GameObject {
     boolean typeOfEventS;
     boolean typeOfEventD;
     Tank tank1;
-    Tank tank2;
+
     BotGun botGun;
 
     public BotTank(double x, double y, double VMax, double a, double hitPointsMax,
-                   double rechargeTime, BufferedImage image, Tank tank1, Tank tank2) throws IOException {
+                   double rechargeTime, BufferedImage image, Tank tank1) throws IOException {
         this.x = x;
         this.y = y;
         this.VMax = VMax;
@@ -38,8 +38,7 @@ public class BotTank extends GameObject {
         RechargeTime = rechargeTime;
         this.image = image;
         this.tank1=tank1;
-        this.tank2=tank2;
-        botGun=new BotGun(0.2,tank1,tank2, this);
+        botGun=new BotGun(0.2,tank1, this);
 
     }
 

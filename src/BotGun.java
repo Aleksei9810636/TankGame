@@ -14,15 +14,13 @@ import java.io.IOException;
         double TankVAngle;
         boolean typeOfEventFire=false;
         Tank tank1;
-        Tank tank2;
         BotTank botTank;
         BufferedImage image = ImageIO.read(new File("imgs\\redGun.png"));
 
-        public BotGun(double AbcVAngle, Tank tank1, Tank tank2, BotTank botTank) throws IOException {
+        public BotGun(double AbcVAngle, Tank tank1, BotTank botTank) throws IOException {
             this.botTank=botTank;
             this.AbcVAngle = AbcVAngle;
             this.tank1=tank1;
-            this.tank2=tank2;
         }
 
         public void paint(Graphics g, double x, double y) {

@@ -16,8 +16,9 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListener, MouseMotionListener {
-    String stage="start";                 //"game";   //"menu";
-    String User="gamer";
+    String stage = "start";                 //"game";   //"menu";
+    String stageGame=" ";
+    String User = "gamer";
     BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
     BufferedImage Start1on1button1 = ImageIO.read(new File("imgs\\1on1version1.png"));
     BufferedImage Start1on1button2 = ImageIO.read(new File("imgs\\1on1version2.png"));
@@ -31,7 +32,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
     BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
     BufferedImage TestWall = ImageIO.read(new File("imgs\\StaticBox.png"));
-//BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
+    //BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
     Tank Tank1;
     Tank Tank2;
 
@@ -49,24 +50,24 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     ArrayList<Wall> walls = new ArrayList<>();
     ArrayList<Wall> Startwalls;
     ArrayList<BotTank> BotTanks = new ArrayList<>();
-    ArrayList<StringPaint> stringPaint= new ArrayList<>();
-    ArrayList<Button> buttons=new ArrayList<>();
+    ArrayList<StringPaint> stringPaint = new ArrayList<>();
+    ArrayList<Button> buttons = new ArrayList<>();
     int sumBotTank = 0;
+    int MaxBotTank =0;
     long StartTime;
     long time;
     long StringStartTime;
-    long gametime=0;
-    Button buttonInBattle=null;
-    Button buttonReply=null;
-    Button buttonStart1on1=null;
-    FileWriter writer=new FileWriter("file\\file.txt", true);
+    long gametime = 0;
+    Button buttonInBattle = null;
+    Button buttonReply = null;
+    Button buttonStart1on1 = null;
+    FileWriter writer = new FileWriter("file\\file.txt", true);
     FileReader reader = new FileReader("file\\file.txt");
-    Scanner scanner=new Scanner(reader);
-    int[] i1=new int[]{1, 1, 100, 100};
-    int[] i2=new int[]{1, 100, 100, 1};
+    Scanner scanner = new Scanner(reader);
+    int[] i1 = new int[]{1, 1, 100, 100};
+    int[] i2 = new int[]{1, 100, 100, 1};
 
-    Polygon ploika= new Polygon(i1, i2, 4);
-
+    Polygon ploika = new Polygon(i1, i2, 4);
 
 
     Thread threadMusic = new Thread(() -> {
@@ -76,14 +77,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            //threadMusic();  вставь это туда, где должна заиграть музыка
 //        }
     });
-    void threadYest_probitie(){
+
+    void threadYest_probitie() {
         new Thread(() -> {
             new MakeSound().playSound("music\\Yest_probitie.wav");
-           // threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
+            // threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
             System.out.println("audio file finished!");
         }).start();
     }
-    void tread_BOOM(){
+
+    void tread_BOOM() {
         new Thread(() -> {
             new MakeSound().playSound("music\\BOOM.wav");
             //thread_BOOM;  вставь это туда, где должна заиграть музыка
@@ -94,12 +97,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     public TankPanel(Tank tank1, Tank tank2, ArrayList walls, Gun gun, KeyBoardGun keyBoardGun, long StartTime) throws IOException {       //Это вероятно не надо
         this.UzeTank1 = tank1;
-        Tank Tank1Del=new Tank(tank1.x, tank1.y, tank1.VMaxUze, tank1.a, tank1.HitPoints, tank1.laja, tank1.RechargeTime);
-        this.Tank1=Tank1Del;
+        Tank Tank1Del = new Tank(tank1.x, tank1.y, tank1.VMaxUze, tank1.a, tank1.HitPoints, tank1.laja, tank1.RechargeTime);
+        this.Tank1 = Tank1Del;
         this.gun1 = gun;
         this.UzeTank2 = tank2;
-        Tank Tank2Del=new Tank(tank2.x, tank2.y, tank2.VMaxUze, tank2.a, tank2.HitPoints, tank2.laja, tank2.RechargeTime);
-        this.Tank2=Tank2Del;
+        Tank Tank2Del = new Tank(tank2.x, tank2.y, tank2.VMaxUze, tank2.a, tank2.HitPoints, tank2.laja, tank2.RechargeTime);
+        this.Tank2 = Tank2Del;
         this.keyBoardGun = keyBoardGun;
         this.Startwalls = walls;
         WallsDifferentiation();
@@ -107,16 +110,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         addMouseMotionListener(this);
         this.StartTime = StartTime;
         System.nanoTime();
-        StringStartTime=0;
+        StringStartTime = 0;
         threadMusic.start();
 //        thread.interrupt();          //  это остановит музыку
         GameReply();
     }
 
 
-
-
-        public void WallsDifferentiation () throws IOException {
+    public void WallsDifferentiation() throws IOException {
         for (int i = 0; i < Startwalls.size(); i++) {
             Wall startwall = Startwalls.get(i);
             int UnitX = startwall.width / startwall.SizeBoxX;
@@ -134,16 +135,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     }
 
 
-        //  Далее управление клавиатурой и мышкой
+    //  Далее управление клавиатурой и мышкой
 
 
-        @Override
-        public void mouseClicked (MouseEvent e){              // на отпускание
+    @Override
+    public void mouseClicked(MouseEvent e) {              // на отпускание
 
 
-
-
-            // запись всей строки
+        // запись всей строки
 
 //            try {
 //                writer.write("A\n");
@@ -161,15 +160,15 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //            while (scanner.hasNextLine()) {
 //                System.out.println(i + " : " + scanner.nextLine());
 //            }
-            if(User.equals("creator")){
-                System.out.println("mouseClicked: "+ "("+e.getX()+";" + e.getY()+")");
-                Wall wall = null;
-                int variationx=e.getX();
-                int variationy=e.getY();
-                int biteJ=0;
-                for(int j=0; j< walls.size(); j++){
-                    Wall w=walls.get(j);
-                    Wall bite=walls.get(biteJ);
+        if (User.equals("creator")) {
+            System.out.println("mouseClicked: " + "(" + e.getX() + ";" + e.getY() + ")");
+            Wall wall = null;
+            int variationx = e.getX();
+            int variationy = e.getY();
+            int biteJ = 0;
+            for (int j = 0; j < walls.size(); j++) {
+                Wall w = walls.get(j);
+                Wall bite = walls.get(biteJ);
 
 //                    if( ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
 //                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<4*w.SizeBoxX*2*w.SizeBoxX){
@@ -183,95 +182,93 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 //                    }
 
 
-
-
-
-                    if(     ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
-                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<4*w.SizeBoxX*2*w.SizeBoxX
+                if (((w.x - w.SizeBoxX / 2) - e.getX()) * ((w.x - w.SizeBoxX / 2) - e.getX()) +
+                        ((w.y - w.SizeBoxY / 2) - e.getY()) * ((w.y - w.SizeBoxY / 2) - e.getY()) < 4 * w.SizeBoxX * 2 * w.SizeBoxX
                         &&
-                            ((w.x-w.SizeBoxX/2)-e.getX())*((w.x-w.SizeBoxX/2)-e.getX())+
-                            ((w.y-w.SizeBoxY/2)-e.getY())*((w.y-w.SizeBoxY/2)-e.getY())<=
-                            ((bite.x-bite.SizeBoxX/2)-e.getX())*((bite.x-bite.SizeBoxX/2)-e.getX())+
-                            ((bite.y-bite.SizeBoxY/2)-e.getY())*((bite.y-bite.SizeBoxY/2)-e.getY())
-                    ){
-                        biteJ=j;
-                    }
+                        ((w.x - w.SizeBoxX / 2) - e.getX()) * ((w.x - w.SizeBoxX / 2) - e.getX()) +
+                                ((w.y - w.SizeBoxY / 2) - e.getY()) * ((w.y - w.SizeBoxY / 2) - e.getY()) <=
+                                ((bite.x - bite.SizeBoxX / 2) - e.getX()) * ((bite.x - bite.SizeBoxX / 2) - e.getX()) +
+                                        ((bite.y - bite.SizeBoxY / 2) - e.getY()) * ((bite.y - bite.SizeBoxY / 2) - e.getY())
+                ) {
+                    biteJ = j;
                 }
-                Wall w =walls.get(biteJ);
+            }
+            Wall w = walls.get(biteJ);
 
-                if(e.getX()>w.x+w.SizeBoxX && e.getY()>w.y && e.getY()<w.y+w.SizeBoxY){
-                    variationx=w.x+w.SizeBoxX;
-                    variationy=w.y;
-                    System.out.println("right build: ("+w.x+";"+w.y+")");
-                }
-                if (e.getX() < w.x &&  e.getY()>w.y && e.getY()<w.y+w.SizeBoxY) {
-                    variationx = w.x - w.SizeBoxX;
-                    variationy = w.y;
-                    System.out.println("left build: ("+w.x+";"+w.y+")");
-                }
-                if(e.getY()>w.y+w.SizeBoxY && e.getX()>w.x && e.getX()<w.x+w.SizeBoxX){
-                    variationx=w.x;
-                    variationy=w.y+w.SizeBoxY;
-                    System.out.println("down build: ("+w.x+";"+w.y+")");
-                }if(e.getY()<w.y && e.getX()>w.x && e.getX()<w.x+w.SizeBoxX){
-                    variationx=w.x;
-                    variationy=w.y-w.SizeBoxY;
-                    System.out.println("up build: ("+w.x+";"+w.y+")");
-                }
+            if (e.getX() > w.x + w.SizeBoxX && e.getY() > w.y && e.getY() < w.y + w.SizeBoxY) {
+                variationx = w.x + w.SizeBoxX;
+                variationy = w.y;
+                System.out.println("right build: (" + w.x + ";" + w.y + ")");
+            }
+            if (e.getX() < w.x && e.getY() > w.y && e.getY() < w.y + w.SizeBoxY) {
+                variationx = w.x - w.SizeBoxX;
+                variationy = w.y;
+                System.out.println("left build: (" + w.x + ";" + w.y + ")");
+            }
+            if (e.getY() > w.y + w.SizeBoxY && e.getX() > w.x && e.getX() < w.x + w.SizeBoxX) {
+                variationx = w.x;
+                variationy = w.y + w.SizeBoxY;
+                System.out.println("down build: (" + w.x + ";" + w.y + ")");
+            }
+            if (e.getY() < w.y && e.getX() > w.x && e.getX() < w.x + w.SizeBoxX) {
+                variationx = w.x;
+                variationy = w.y - w.SizeBoxY;
+                System.out.println("up build: (" + w.x + ";" + w.y + ")");
+            }
 
-                if(e.getButton()==3){
-                    int[] wallX = new  int[]{
-                            variationx+w.SizeBoxX,
-                            variationx,
-                            variationx,
-                            variationx+w.SizeBoxX
-                    };
-                    int[] wallY = new  int[]{
-                            variationy,
-                            variationy,
-                            variationy+w.SizeBoxY,
-                            variationy+w.SizeBoxY
-                    };
+            if (e.getButton() == 3) {
+                int[] wallX = new int[]{
+                        variationx + w.SizeBoxX,
+                        variationx,
+                        variationx,
+                        variationx + w.SizeBoxX
+                };
+                int[] wallY = new int[]{
+                        variationy,
+                        variationy,
+                        variationy + w.SizeBoxY,
+                        variationy + w.SizeBoxY
+                };
 
-                    ploika=new Polygon(wallX, wallY, 4);
-                }
+                ploika = new Polygon(wallX, wallY, 4);
+            }
 
 
-                if(e.getButton()==1) {
+            if (e.getButton() == 1) {
+                try {
+
+                    wall = new Wall(variationx, variationy, 75, 75, TestWall, 300);
+                    String str = "Wall wall = new Wall(" + variationx + ", " + variationy + ", " + "75, 75, TestWall, 300)";
                     try {
-
-                        wall = new Wall(variationx, variationy, 75, 75, TestWall, 300);
-                        String str="Wall wall = new Wall("+variationx+", "+variationy+", "+"75, 75, TestWall, 300)";
-                        try {
-                            writer.write(str+"\n");
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        try {
-                             writer.flush();
-                       } catch (IOException ex) {
-                          throw new RuntimeException(ex);
-                       }
-
+                        writer.write(str + "\n");
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                    walls.add(wall);
-                }
-            }
+                    try {
+                        writer.flush();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                walls.add(wall);
+            }
         }
 
+    }
 
-        @Override
-        public void mousePressed (MouseEvent e){               //на нажатие
+
+    @Override
+    public void mousePressed(MouseEvent e) {               //на нажатие
 //        System.out.println("mousePressed");
-            boolean FlagTypeMouse=true;
-            for(int i = 0 ; i<buttons.size(); i++){
-                if(buttons.get(i).TypeMouse.equals("yes")){
-                    FlagTypeMouse=false;
-                }
+        boolean FlagTypeMouse = true;                                // последующие 6 строк не дают стрелять, если мышь на кнопке
+        for (int i = 0; i < buttons.size(); i++) {
+            if (buttons.get(i).TypeMouse.equals("yes")) {
+                FlagTypeMouse = false;
             }
+        }
 
         if ((System.currentTimeMillis() - UzeTank1.LastShotTime) * 0.001 > UzeTank1.RechargeTime && stage.equals("game") && FlagTypeMouse) {
             UzeTank1.LastShotTime = System.currentTimeMillis();
@@ -279,67 +276,82 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             bullets.add(bullet);
             tread_BOOM();
         }
-            for(int i=0; i<buttons.size(); i++){
-                int k=-1; // для того чтобы кнопка не нажималась много раз за один раз
-                if(buttons.get(i).Name.equals("pause") && buttons.get(i).TypeMouse.equals("yes")){
-                    if(!stage.equals("menu") && k<0){
-                        stage="menu";
-                        k+=1;
-                    }
-                    if(stage.equals("menu") && k<0){
-                        stage="game";
-                        k++;
-                    }
+
+        for (int i = 0; i < buttons.size(); i++) {
+            int k = -1; // для того чтобы кнопка не нажималась много раз за один раз
+            if (buttons.get(i).Name.equals("pause") && buttons.get(i).TypeMouse.equals("yes")) {
+                if (!stage.equals("menu") && k < 0) {
+                    stage = "menu";
+                    k += 1;
                 }
-                if(buttons.get(i).Name.equals("InBattle") && buttons.get(i).TypeMouse.equals("yes")){
-                    stage="game";
+                if (stage.equals("menu") && k < 0) {
+                    stage = "game";
+                    k++;
                 }
-                if(buttons.get(i).Name.equals("reply") && buttons.get(i).TypeMouse.equals("yes")){
-                    try {
-                        GameReply();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+            }
+            if (buttons.get(i).Name.equals("1vsBots") && buttons.get(i).TypeMouse.equals("yes")) {
+                stage = "game";
+                stageGame = "1vsBots";
+                try {
+                    GameReply();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
-                if(buttons.get(i).Name.equals("Start1on1") && buttons.get(i).TypeMouse.equals("yes")){
-                    System.out.println("Start1on1");
+            }
+            if (buttons.get(i).Name.equals("reply") && buttons.get(i).TypeMouse.equals("yes")) {
+                stage = "game";
+                try {
+                    GameReply();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+            if (buttons.get(i).Name.equals("Start1on1") && buttons.get(i).TypeMouse.equals("yes")) {
+                stage = "game";
+                stageGame = "1vs1";
+                try {
+                    GameReply();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
 
+        }
+
 
     }
 
-        @Override
-        public void mouseReleased (MouseEvent e){              // хз что но похоже на отпускание
+    @Override
+    public void mouseReleased(MouseEvent e) {              // хз что но похоже на отпускание
     }
 
-        @Override
-        public void mouseEntered (MouseEvent e){                //видимо когда наводим на панель
+    @Override
+    public void mouseEntered(MouseEvent e) {                //видимо когда наводим на панель
         //       System.out.println("mouseEntered");
     }
 
-        @Override
-        public void mouseExited (MouseEvent e){                 //видимо конда уводим с панели
+    @Override
+    public void mouseExited(MouseEvent e) {                 //видимо конда уводим с панели
 //        System.out.println("mouseExited");
     }
 
-        @Override
-        public void mouseDragged (MouseEvent e){           //движется и зажата
+    @Override
+    public void mouseDragged(MouseEvent e) {           //движется и зажата
     }
 
-        @Override
-        public void mouseMoved (MouseEvent e){             // движется и не зажата
+    @Override
+    public void mouseMoved(MouseEvent e) {             // движется и не зажата
         MouseX = e.getX();
         MouseY = e.getY();
-            for(int i=0; i<buttons.size(); i++){
-                buttons.get(i).MouseX=MouseX;
-                buttons.get(i).MouseY=MouseY;
-            }
+        for (int i = 0; i < buttons.size(); i++) {
+            buttons.get(i).MouseX = MouseX;
+            buttons.get(i).MouseY = MouseY;
+        }
 
     }
 
-        @Override
-        public boolean dispatchKeyEvent (KeyEvent e){
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
 
         if (e.getKeyCode() == 192) {                      // фигово реализоваанное подключение фигово реализованного чита
             UzeTank1.typeOfEventCheat = true;
@@ -354,7 +366,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (e.getKeyCode() == 192) {                      // фигово реализоваанное подключение фигово реализованного чита
                 UzeTank1.typeOfEventCheat = true;
             }
-            if (e.getKeyCode() == 104) {
+            if (e.getKeyCode() == 104 && stageGame.equals("1vs1")) {
                 if ((System.currentTimeMillis() - UzeTank2.LastShotTime) * 0.001 > UzeTank2.RechargeTime && stage.equals("game")) {
                     UzeTank2.LastShotTime = System.currentTimeMillis();
                     Bullet bullet = new Bullet(UzeTank2.x, UzeTank2.y, keyBoardGun.Angle, 2);
@@ -379,14 +391,14 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
 
 
-        if (e.getID() == KeyEvent.KEY_PRESSED){            //  creator              работает только при нажатии
+        if (e.getID() == KeyEvent.KEY_PRESSED) {            //  creator              работает только при нажатии
             if (e.getKeyChar() == ']') {
-                User="creator";
+                User = "creator";
             }
         }
         if (e.getID() == KeyEvent.KEY_RELEASED) {
             if (e.getKeyChar() == ']') {
-                User="gamer";
+                User = "gamer";
             }
         }                                                   // end creator
 
@@ -406,16 +418,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             }
 
 
-            if (e.getKeyCode() == 38) {                //////ijkl                            46   лево права дуло                 "стрелочка вправо" выстрел
+            if (e.getKeyCode() == 38 && stageGame.equals("1vs1")) {                //////ijkl                            46   лево права дуло                 "стрелочка вправо" выстрел
                 UzeTank2.typeOfEventW = true;
             }
-            if (e.getKeyCode() == 37) {
+            if (e.getKeyCode() == 37 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventA = true;
             }
-            if (e.getKeyCode() == 40) {
+            if (e.getKeyCode() == 40 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventS = true;
             }
-            if (e.getKeyCode() == 39) {
+            if (e.getKeyCode() == 39 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventD = true;
             }
         }
@@ -436,74 +448,77 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             if (e.getKeyChar() == 'd') {
                 UzeTank1.typeOfEventD = false;
             }
-            if (e.getKeyCode() == 38) {                //////ijkl                            46   лево права дуло                 "стрелочка вправо" выстрел
+            if (e.getKeyCode() == 38 && stageGame.equals("1vs1")) {                //////ijkl                            46   лево права дуло                 "стрелочка вправо" выстрел
                 UzeTank2.typeOfEventW = false;
             }
-            if (e.getKeyCode() == 37) {
+            if (e.getKeyCode() == 37 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventA = false;
             }
-            if (e.getKeyCode() == 40) {
+            if (e.getKeyCode() == 40 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventS = false;
             }
-            if (e.getKeyCode() == 39) {
+            if (e.getKeyCode() == 39 && stageGame.equals("1vs1")) {
                 UzeTank2.typeOfEventD = false;
             }
         }
         return false;
     }
 
-        public void UPTime (Graphics g){
+    public void UPTime(Graphics g) {
         time = System.currentTimeMillis() - StartTime;
         g.drawString(Integer.toString((int) (time / 1000)), 100, 100);
 
     }
-    public void ButtonControl(){
+
+    public void ButtonControl() {
 //        Button buttonInBattle=null;// = new Button(PanelWidth * 0.5-800, 10,400, 150, "InBattle", imageButton1ToBattle, imageButton1ToBattle);
-        if(stage.equals("StartMenu") && buttons.size()<1){
-            Button buttonInBattle0=new Button(PanelWidth * 0.5-200, 10, 400, 200, "InBattle", imageButton1ToBattle, imageButton1ToBattle);
+        if (stage.equals("StartMenu") && buttons.size() < 1) {
+            Button buttonInBattle0 = new Button(PanelWidth * 0.5 - 200, 10, 400, 200, "1vsBots", imageButton1ToBattle, imageButton1ToBattle);
             buttonInBattle = buttonInBattle0;
             buttons.add(buttonInBattle);
-        }if(!stage.equals("StartMenu")){
-            if(buttonInBattle!=null) {
+        }
+        if (!stage.equals("StartMenu")) {
+            if (buttonInBattle != null) {
                 buttons.remove(buttonInBattle);
             }
         }
 
-        if(stage.equals("StartMenu") && buttons.size()<2){        // старт 1 на 1
-            buttonStart1on1 = new Button(PanelWidth * 0.5-150, PanelHeight*0.5-50,300,100,"Start1on1", Start1on1button1 , Start1on1button2);
+        if (stage.equals("StartMenu") && buttons.size() < 2) {        // старт 1 на 1
+            buttonStart1on1 = new Button(PanelWidth * 0.5 - 150, PanelHeight * 0.5 - 50, 300, 100, "Start1on1", Start1on1button1, Start1on1button2);
             buttons.add(buttonStart1on1);
-        }if(!stage.equals("StartMenu")){
+        }
+        if (!stage.equals("StartMenu")) {
             buttons.remove(buttonStart1on1);
         }
 
-        if(buttons.size()<1 && !stage.equals("StartMenu")) {
-            Button button = new Button(PanelWidth * 0.5, 1,75,75,"pause", PausBotton1, PausBotton2);
+        if (buttons.size() < 1 && !stage.equals("StartMenu") && !stage.equals("start")) {
+            Button button = new Button(PanelWidth * 0.5, 1, 75, 75, "pause", PausBotton1, PausBotton2);
             buttons.add(button);
         }
 
-        if(stage.equals("menu") && buttons.size()<2){
-            buttonReply = new Button(PanelWidth * 0.5-200, 10,75,75,"reply", ReplyButton1, ReplyButton2);
+        if (stage.equals("menu") && buttons.size() < 2) {
+            buttonReply = new Button(PanelWidth * 0.5 - 100, 0, 75, 75, "reply", ReplyButton1, ReplyButton2);
             buttons.add(buttonReply);
         }
-        if(!stage.equals("menu")){
-            if(buttonReply!=null) {
+        if (!stage.equals("menu")) {
+            if (buttonReply != null) {
                 buttons.remove(buttonReply);
             }
         }
 
 
-
     }
 
-    public void UPgametime (Graphics g){
+    public void UPgametime(Graphics g) {
 
-        gametime =5 ;
+        gametime = 5;
         g.drawString(Integer.toString((int) (time / 1000)), 800, 100);
     }
-        public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
-        if (time > 3000 && sumBotTank < 0) {
+
+    public void BotControl(Tank tank1, ArrayList<Wall> walls) throws IOException {
+        if (time > 3000 && sumBotTank < MaxBotTank) {
             BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
-            BotTank botTank1 = new BotTank(350, 111 * sumBotTank + 100, 1, 0.05, 900, 2, image, tank1, tank2);
+            BotTank botTank1 = new BotTank(350, 111 * sumBotTank + 100, 1, 0.05, 900, 2, image, tank1);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, UzeTank1, UzeTank2);
 //            BotGuns.add(sumBotTank, botGun1);
@@ -520,103 +535,83 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     }
 
-    public  void GameReply () throws IOException {
-        Tank Tank1Del=new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
-        UzeTank1=Tank1;
-        Tank1=Tank1Del;
-        Tank Tank2Del=new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
-        UzeTank2=Tank2;
-        Tank2=Tank2Del;
+    public void GameReply() throws IOException {
+        Tank Tank1Del = new Tank(Tank1.x, Tank1.y, Tank1.VMaxUze, Tank1.a, Tank1.HitPoints, Tank1.laja, Tank1.RechargeTime);
+        UzeTank1 = Tank1;
+        Tank1 = Tank1Del;
+        if (stageGame.equals("1vs1")) {
+            Tank Tank2Del = new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
+            UzeTank2 = Tank2;
+            Tank2 = Tank2Del;
+        }else{
+            MaxBotTank=3;
+        }
 
 
 
-        walls=new ArrayList<>();
+        walls = new ArrayList<>();
         reader = new FileReader("file\\file.txt");
-        scanner=new Scanner(reader);
+        scanner = new Scanner(reader);
 
         while (scanner.hasNextLine()) {             // бежим по строкам пока они есть
-            String s=scanner.nextLine();
-            if(s.startsWith("Wall wall = new Wall")){
+            String s = scanner.nextLine();
+            if (s.startsWith("Wall wall = new Wall")) {
 
-                BufferedImage nameImage= TestWall;
+                BufferedImage nameImage = TestWall;
 
                 ArrayList<Integer> v = new ArrayList<>();
 
-                int NumberCin=0;
-                for(int i=0; i<s.length();i++){  // бежим по конкретной строке
+                int NumberCin = 0;
+                for (int i = 0; i < s.length(); i++) {  // бежим по конкретной строке
                     char c = s.charAt(i);
-                    String digit="";
-                    while(Character.isDigit(c)) {
+                    String digit = "";
+                    while (Character.isDigit(c)) {
                         digit += c;
                         i++;
-                        c=s.charAt(i);
+                        c = s.charAt(i);
                     }
-                    if(!digit.equals("")) {
+                    if (!digit.equals("")) {
                         v.add(parseInt(digit));
                     }
                 }
-                if(v.size()==5) {
+                if (v.size() == 5) {
                     Wall wall = new Wall(v.get(0), v.get(1), v.get(2), v.get(3), nameImage, v.get(4));
                     walls.add(wall);
-                }else{
+                } else {
                     System.out.println("Что то не так с базой данных стенок!!!");
                 }
             }
-            System.out.println("цикл");
         }
-        System.out.println("While end");
 
     }
 
 
-
-        public void updateCollisions (Graphics g){
+    public void updateCollisions(Graphics g) {
         int[] Tank1X = UzeTank1.getTankX();
         int[] Tank1Y = UzeTank1.getTankY();
 
-        int[] Tank2X = UzeTank2.getTankX();
-        int[] Tank2Y = UzeTank2.getTankY();
         g.setColor(new Color(252, 252, 252));            // это центр
         g.fillOval((int) (UzeTank1.x - 1), (int) (UzeTank1.y - 1), 2, 2);
 
 
         Polygon P_tank1 = new Polygon(Tank1X, Tank1Y, 4);
-        Polygon P_tank2 = new Polygon(Tank2X, Tank2Y, 4);
+
 
         for (int i = 0; i < walls.size(); i++) {
             Wall wall = walls.get(i);
-
-
             if (P_tank1.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                 if (P_tank1.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy) ;
+                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy);
                 }
                 if (P_tank1.intersects(wall.x, wall.y, 1, wall.height)) {
-                    this.UzeTank1.x -= Math.abs(this.UzeTank1.vy) ;
+                    this.UzeTank1.x -= Math.abs(this.UzeTank1.vy);
                 }
                 if (P_tank1.intersects(wall.x, wall.y, wall.width, 1)) {
-                    this.UzeTank1.y -= Math.abs(this.UzeTank1.vy) ;
+                    this.UzeTank1.y -= Math.abs(this.UzeTank1.vy);
                 }
                 if (P_tank1.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                    this.UzeTank1.x += Math.abs(this.UzeTank1.vy) ;
-                }
-                g.setColor(new Color(55, 250, 31, 255));
-                g.fillRect(10, 10, 1200, 20);
-            }
-            if (P_tank2.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
-
-                if (P_tank2.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank2.y += Math.abs(this.UzeTank2.vy) ;
-                }
-                if (P_tank2.intersects(wall.x, wall.y, 1, wall.height)) {
-                    this.UzeTank2.x -= Math.abs(this.UzeTank2.vy) ;
-                }
-                if (P_tank2.intersects(wall.x, wall.y, wall.width, 1)) {
-                    this.UzeTank2.y -= Math.abs(this.UzeTank2.vy) ;
-                }
-                if (P_tank2.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                    this.UzeTank2.x += Math.abs(this.UzeTank2.vy) ;
+                    this.UzeTank1.x += Math.abs(this.UzeTank1.vy);
                 }
                 g.setColor(new Color(55, 250, 31, 255));
                 g.fillRect(10, 10, 1200, 20);
@@ -628,21 +623,46 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 if (P_botTank.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                     if (P_botTank.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                        this.BotTanks.get(j).y += Math.abs(this.UzeTank1.vy) ;
+                        this.BotTanks.get(j).y += Math.abs(this.UzeTank1.vy);
                     }
                     if (P_botTank.intersects(wall.x, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x -= Math.abs(this.UzeTank1.vy) ;
+                        this.BotTanks.get(j).x -= Math.abs(this.UzeTank1.vy);
                     }
                     if (P_botTank.intersects(wall.x, wall.y, wall.width, 1)) {
-                        this.BotTanks.get(j).y -= Math.abs(this.UzeTank1.vy) ;
+                        this.BotTanks.get(j).y -= Math.abs(this.UzeTank1.vy);
                     }
                     if (P_botTank.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x += Math.abs(this.UzeTank1.vy) ;
+                        this.BotTanks.get(j).x += Math.abs(this.UzeTank1.vy);
                     }
                 }
             }
         }
+        if (stageGame.equals("1vs1")) {
+            int[] Tank2X = UzeTank2.getTankX();
+            int[] Tank2Y = UzeTank2.getTankY();
+            Polygon P_tank2 = new Polygon(Tank2X, Tank2Y, 4);
+            for (int i = 0; i < walls.size(); i++) {
+                Wall wall = walls.get(i);
 
+                if (P_tank2.intersects(wall.x, wall.y, wall.width, wall.height) && stageGame.equals("1vs1")) {        //если пересекаются..
+
+                    if (P_tank2.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
+                        this.UzeTank2.y += Math.abs(this.UzeTank2.vy);
+                    }
+                    if (P_tank2.intersects(wall.x, wall.y, 1, wall.height)) {
+                        this.UzeTank2.x -= Math.abs(this.UzeTank2.vy);
+                    }
+                    if (P_tank2.intersects(wall.x, wall.y, wall.width, 1)) {
+                        this.UzeTank2.y -= Math.abs(this.UzeTank2.vy);
+                    }
+                    if (P_tank2.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
+                        this.UzeTank2.x += Math.abs(this.UzeTank2.vy);
+                    }
+                }
+                g.setColor(new Color(55, 250, 31, 255));
+                g.fillRect(10, 10, 1200, 20);
+            }
+        }
     }
 
 
@@ -706,9 +726,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         public void HitCheck (Graphics g) {
         int[] Tank1X = UzeTank1.getTankX();
         int[] Tank1Y = UzeTank1.getTankY();
-        int[] Tank2X = UzeTank2.getTankX();
-        int[] Tank2Y = UzeTank2.getTankY();
-        Polygon P_tank2 = new Polygon(Tank2X, Tank2Y, 4);
+
         Polygon P_tank1 = new Polygon(Tank1X, Tank1Y, 4);
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
@@ -775,14 +793,19 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 ////                    i -= 1;
 ////                }
 //            }
+            if(stageGame.equals("1vs1")) {
+                int[] Tank2X = UzeTank2.getTankX();
+                int[] Tank2Y = UzeTank2.getTankY();
+                Polygon P_tank2 = new Polygon(Tank2X, Tank2Y, 4);
 
-            if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
-                this.UzeTank2.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
-                bullets.remove(i);
-                if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
-                    break;
-                } else {
-                    i -= 1;
+                if (bullets.size() != 0 && P_tank2.intersects(bullets.get(i).x, bullets.get(i).y, 10, 10) && bullets.get(i).IndicationTank != 2) {                   // отстойненько т.к. размер пули не читается
+                    this.UzeTank2.HitPoints -= bullets.get(i).Damage;                                                                               // отстойненько т.к. размер пули не читается
+                    bullets.remove(i);
+                    if (i == 0) {     //этот иф призван сюда исправить баги с размером массива и удаление последнего элемента
+                        break;
+                    } else {
+                        i -= 1;
+                    }
                 }
             }
 
@@ -832,7 +855,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
                 // это вставила джава
                 try {
-                    BotControl(UzeTank1, UzeTank2, walls);
+                    BotControl(UzeTank1, walls);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -840,26 +863,40 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 updateCollisions(g);
                 GunAngle();
                 UzeTank1.UpdatePlace();
-                UzeTank2.UpdatePlace();          ///
-
+                if(stageGame.equals("1vs1")) {
+                    UzeTank2.UpdatePlace();
+                    UzeTank2.paint(g);
+                    keyBoardGun.UpdatePlace();
+                    keyBoardGun.paint(g, UzeTank2.x, UzeTank2.y);
+                }
                 gun1.UpdatePlace();
-                keyBoardGun.UpdatePlace();
+
                 BulletList(g);
                 HitCheck(g);
 
                 UzeTank1.paint(g);
-                UzeTank2.paint(g);
 
                 gun1.paint(g, UzeTank1.x, UzeTank1.y);
-                keyBoardGun.paint(g, UzeTank2.x, UzeTank2.y);
+
                 for (int i = 0; i < stringPaint.size(); i++) {
                     stringPaint.get(i).paint(g);
                     if (!stringPaint.get(i).death) {
                         stringPaint.remove(i);
                     }
                 }
-                if(UzeTank1.StagePanel.equals("menu") || UzeTank2.StagePanel.equals("menu")){
+                if(stageGame.equals("1vs1") && UzeTank2.StagePanel.equals("menu")){
                     stage="menu";
+                    StringPaint sp=new StringPaint("Победил 1 игрок", 1000, 300, 7000);
+                    stringPaint.add(sp);
+
+                }
+                if(UzeTank1.StagePanel.equals("menu")){
+                    stage="menu";
+                    if(stageGame.equals("1vs1")){
+                        StringPaint sp=new StringPaint("Победил 2 игрок", 1000, 300, 7000);
+                        stringPaint.add(sp);
+                    }
+
                 }
 
 
