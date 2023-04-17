@@ -26,10 +26,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
-    BufferedImage imagestart = ImageIO.read(new File("imgs\\Start.jpg"));
+    BufferedImage imagestart = ImageIO.read(new File("imgs\\StartDog.jpg"));
+    BufferedImage imageBlack = ImageIO.read(new File("imgs\\Black.jpg"));
     BufferedImage imagemenu = ImageIO.read(new File("imgs\\Menu.jpg"));
     BufferedImage imageFon = ImageIO.read(new File("imgs\\Fon.jpg"));
-    BufferedImage TestWall = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
+    BufferedImage TestWall = ImageIO.read(new File("imgs\\StaticBox.png"));
 //BufferedImage imageFon = ImageIO.read(new File("imgs\\pol_ot_Aleshe.jpg"));
     Tank Tank1;
     Tank Tank2;
@@ -107,10 +108,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         this.StartTime = StartTime;
         System.nanoTime();
         StringStartTime=0;
-
-
         threadMusic.start();
 //        thread.interrupt();          //  это остановит музыку
+        GameReply();
     }
 
 
@@ -503,7 +503,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         public void BotControl (Tank tank1, Tank tank2, ArrayList < Wall > walls) throws IOException {
         if (time > 3000 && sumBotTank < 0) {
             BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
-            BotTank botTank1 = new BotTank(550, 111 * sumBotTank + 400, 1, 0.05, 900, 3, image, tank1, tank2);
+            BotTank botTank1 = new BotTank(350, 111 * sumBotTank + 100, 1, 0.05, 900, 2, image, tank1, tank2);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, UzeTank1, UzeTank2);
 //            BotGuns.add(sumBotTank, botGun1);
@@ -528,7 +528,11 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         UzeTank2=Tank2;
         Tank2=Tank2Del;
 
+
+
         walls=new ArrayList<>();
+        reader = new FileReader("file\\file.txt");
+        scanner=new Scanner(reader);
 
         while (scanner.hasNextLine()) {             // бежим по строкам пока они есть
             String s=scanner.nextLine();
@@ -558,7 +562,9 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     System.out.println("Что то не так с базой данных стенок!!!");
                 }
             }
+            System.out.println("цикл");
         }
+        System.out.println("While end");
 
     }
 
@@ -807,8 +813,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             PanelWidth=this.getWidth();
             PanelHeight=this.getHeight();
             UPTime(g);
-            if(time<1500){
-                if(time>100){
+            if(time<3000+100){
+                if(time>3000){
                     stage="StartMenu";
                 }
             }
@@ -841,9 +847,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 BulletList(g);
                 HitCheck(g);
 
-
                 UzeTank1.paint(g);
-                UzeTank2.paint(g);                    ///
+                UzeTank2.paint(g);
 
                 gun1.paint(g, UzeTank1.x, UzeTank1.y);
                 keyBoardGun.paint(g, UzeTank2.x, UzeTank2.y);
@@ -883,7 +888,17 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             } else
             {
                 if(stage.equals("start")){
-                    g.drawImage(imagestart, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+//                    g.drawImage(imagestart, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+                    g.drawImage(imageBlack, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+
+
+                    Graphics2D g2d = (Graphics2D) g;                                                  // реализация прозрачности
+                    float alpha = 1.0f - (float)(System.currentTimeMillis()-StartTime)/3000;
+                    if (alpha > 0.0f && alpha <= 1.0f){
+                        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+                        g2d.drawImage(imagestart, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+                        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                    }
                 }
                 if(stage.equals("menu")){
                     g.drawImage(imagemenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
@@ -897,7 +912,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 buttons.get(i).paint(g);
             }
 
-            g.drawPolygon(ploika);
+            //g.drawPolygon(ploika);
         }
 
 

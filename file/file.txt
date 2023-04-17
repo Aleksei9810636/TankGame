@@ -1,73 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # # # # # #
-#           #
-#           #
-#           #
-#           #
-#           #
-# # # # # # #
-
-
-
-
-
-
-
 List Tank:
 Tank tank1=new Tank(800,350, 2.5,  0.05, 900, 50, 1);
 Tank tank2=new Tank(800, 650, 2, 0.05, 900, 2500, 1);
@@ -77,26 +8,70 @@ Gun gun=new Gun(1);
 KeyBoardGun keyBoardGun=new KeyBoardGun(0.7);
 
 List Walls:            (FindFeature: Wall wall = new Wall )
-Wall wall = new Wall(841, 129, 75, 75, TestWall, 300)
-Wall wall = new Wall(675, 120, 75, 75, TestWall, 300)
-Wall wall = new Wall(475, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(325, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(916, 129, 75, 75, TestWall, 300)
-Wall wall = new Wall(1661, 292, 75, 75, TestWall, 300)
-Wall wall = new Wall(1411, 217, 75, 75, TestWall, 300)
-Wall wall = new Wall(829, 120, 75, 75, TestWall, 300)
-Wall wall = new Wall(475, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(325, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(1075, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(925, 200, 75, 75, TestWall, 300)
-Wall wall = new Wall(1597, 277, 75, 75, TestWall, 300)
-Wall wall = new Wall(1499, 162, 75, 75, TestWall, 300)
-Wall wall = new Wall(1522, 277, 75, 75, TestWall, 300)
-Wall wall = new Wall(1424, 162, 75, 75, TestWall, 300)
-Wall wall = new Wall(1447, 277, 75, 75, TestWall, 300)
-Wall wall = new Wall(1349, 162, 75, 75, TestWall, 300)
-Wall wall = new Wall(1372, 277, 75, 75, TestWall, 300)
-Wall wall = new Wall(1275, 196, 75, 75, TestWall, 300)
-Wall wall = new Wall(979, 43, 75, 75, TestWall, 300)
-Wall wall = new Wall(768, 51, 75, 75, TestWall, 300)
-Wall wall = new Wall(904, 43, 75, 75, TestWall, 300)
+
+Wall wall = new Wall(1, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(76, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(151, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(226, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(301, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(376, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(451, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(526, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(601, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(676, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(751, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(826, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(901, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(976, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1051, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1126, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1201, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1276, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1351, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1426, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1501, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1576, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1651, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1726, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 2, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 77, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 152, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 227, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 302, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 377, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 452, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 527, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 602, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 677, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 752, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 827, 75, 75, TestWall, 300)
+Wall wall = new Wall(1801, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1726, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1651, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1576, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1501, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1426, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1351, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1276, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1201, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1126, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1051, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(976, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(901, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(826, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(751, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(676, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(601, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(526, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(451, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(376, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(301, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(226, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(151, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(76, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(1, 902, 75, 75, TestWall, 300)
+Wall wall = new Wall(624, 331, 75, 75, TestWall, 300)
+Wall wall = new Wall(624, 406, 75, 75, TestWall, 300)
+Wall wall = new Wall(624, 481, 75, 75, TestWall, 300)
+Wall wall = new Wall(624, 556, 75, 75, TestWall, 300)
+Wall wall = new Wall(624, 631, 75, 75, TestWall, 300)

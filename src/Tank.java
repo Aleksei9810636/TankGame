@@ -41,6 +41,10 @@ public class Tank extends GameObject {
         this.RechargeTime = RechargeTime;
         HitPointsMax = HitPoints;
 
+        if(laja>500){                                                      // ну типо у ворого лажа больше 500
+            image = ImageIO.read(new File("imgs\\RedTank.jpg"));
+        }
+
     }
 
     public void paint(Graphics g) {
@@ -57,10 +61,10 @@ public class Tank extends GameObject {
 
 
         g.setColor(new Color(75, 68, 68));
-        g.drawRect((int) (laja * 0.5), 900, (int) (HitPointsMax * 0.5), 10);
+        g.drawRect((int) (laja * 0.5), 885, (int) (HitPointsMax * 0.5), 10);
         g.setColor(new Color(239, 12, 12));
-        g.fillRect((int) (laja * 0.5), 900, (int) (HitPoints * 0.5), 10);
-        g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 880);
+        g.fillRect((int) (laja * 0.5), 885, (int) (HitPoints * 0.5), 10);
+        g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 870);
         if (HitPoints <= 0) {
             StagePanel="menu";
         }
