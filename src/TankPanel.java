@@ -926,7 +926,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             {
                 if(stage.equals("start")){
 //                    g.drawImage(imagestart, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
-                    g.drawImage(imageBlack, 0, 0,this.getWidth(), this.getHeight(), 0, 0, imagestart.getWidth(), imagestart.getHeight(), null );
+                    g.drawImage(imageBlack, 0, 0,this.getWidth(), this.getHeight(),0, 0, imagestart.getWidth(), imagestart.getHeight(),  null );
 
 
                     Graphics2D g2d = (Graphics2D) g;                                                  // реализация прозрачности

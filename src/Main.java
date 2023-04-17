@@ -73,7 +73,7 @@ public class Main {
 
         while (true) {
             frame.repaint();
-            Thread.sleep(1);
+            Thread.sleep(20);
         }
     }
 }
