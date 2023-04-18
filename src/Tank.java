@@ -7,20 +7,20 @@ import java.io.IOException;
 
 
 public class Tank extends GameObject {
-    String StagePanel="game";
     double x;
     double y;
     double VAngle;
     double vy;
-    double VMaxUze; // для чита
     double VMax;
     double a;
     double angle = -90;
     double HitPoints;
     double HitPointsMax;
-    double laja;
     double RechargeTime;
     long LastShotTime = 0;
+    String StagePanel="game";
+    double laja;
+    double VMaxUze;
     BufferedImage image = ImageIO.read(new File("imgs\\Tank1.jpg"));
     boolean typeOfEventW;
     boolean typeOfEventA;
@@ -60,9 +60,14 @@ public class Tank extends GameObject {
         }
 
 
-        g.setColor(new Color(75, 68, 68));
+        g.setColor(new Color(0, 0, 0));
+
+        if(laja<500){
+            g.setColor(new Color(166, 11, 227));
+        }else {
+            g.setColor(new Color(239, 12, 12));
+        }
         g.drawRect((int) (laja * 0.5), 885, (int) (HitPointsMax * 0.5), 10);
-        g.setColor(new Color(239, 12, 12));
         g.fillRect((int) (laja * 0.5), 885, (int) (HitPoints * 0.5), 10);
         g.drawString((HitPoints + "/" + HitPointsMax), (int) (laja*0.5 + 200), 870);
         if (HitPoints <= 0) {
