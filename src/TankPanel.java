@@ -19,12 +19,12 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     String stage = "start";                 //"game";   //"menu";
     String stageGame=" ";
     String User = "gamer";
-    BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\ThisWell.jpg"));
-    BufferedImage Start1on1button1 = ImageIO.read(new File("imgs\\1on1version1.png"));
-    BufferedImage Start1on1button2 = ImageIO.read(new File("imgs\\1on1version2.png"));
+    BufferedImage imageStartMenu = ImageIO.read(new File("imgs\\Menu.jpg"));
+    BufferedImage Start1on1button1 = ImageIO.read(new File("imgs\\1vs1.png"));
+    BufferedImage Start1on1button2 = ImageIO.read(new File("imgs\\1vs1.png"));
     BufferedImage ReplyButton1 = ImageIO.read(new File("imgs\\NeonReply1.png"));
     BufferedImage ReplyButton2 = ImageIO.read(new File("imgs\\NeonReply2.png"));
-    BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\ToBattle.png"));
+    BufferedImage imageButton1ToBattle = ImageIO.read(new File("imgs\\1vsBots.png"));
     BufferedImage PausBotton1 = ImageIO.read(new File("imgs\\PauseButton1.png"));
     BufferedImage PausBotton2 = ImageIO.read(new File("imgs\\PauseButton21.png"));
     BufferedImage imagestart = ImageIO.read(new File("imgs\\StartDog.jpg"));
@@ -473,7 +473,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     public void ButtonControl() {
 //        Button buttonInBattle=null;// = new Button(PanelWidth * 0.5-800, 10,400, 150, "InBattle", imageButton1ToBattle, imageButton1ToBattle);
         if (stage.equals("StartMenu") && buttons.size() < 1) {
-            Button buttonInBattle0 = new Button(PanelWidth * 0.5 - 200, 10, 400, 200, "1vsBots", imageButton1ToBattle, imageButton1ToBattle);
+            Button buttonInBattle0 = new Button(PanelWidth * 0.5 - 150, PanelHeight * 0.5 - 50, 300, 100,  "1vsBots", imageButton1ToBattle, imageButton1ToBattle);
             buttonInBattle = buttonInBattle0;
             buttons.add(buttonInBattle);
         }
@@ -484,7 +484,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         }
 
         if (stage.equals("StartMenu") && buttons.size() < 2) {        // старт 1 на 1
-            buttonStart1on1 = new Button(PanelWidth * 0.5 - 150, PanelHeight * 0.5 - 50, 300, 100, "Start1on1", Start1on1button1, Start1on1button2);
+            buttonStart1on1 = new Button(PanelWidth * 0.5 - 150, PanelHeight * 0.5 - 200, 300, 100, "Start1on1", Start1on1button1, Start1on1button2);
             buttons.add(buttonStart1on1);
         }
         if (!stage.equals("StartMenu")) {
@@ -543,11 +543,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             Tank Tank2Del = new Tank(Tank2.x, Tank2.y, Tank2.VMaxUze, Tank2.a, Tank2.HitPoints, Tank2.laja, Tank2.RechargeTime);
             UzeTank2 = Tank2;
             Tank2 = Tank2Del;
+            MaxBotTank=0;
         }else{
             MaxBotTank=3;
         }
-
-
 
         walls = new ArrayList<>();
         reader = new FileReader("file\\file.txt");
@@ -941,7 +940,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                     g.drawImage(imagemenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imagemenu.getWidth(), imagemenu.getHeight(), null );
                 }
                 if(stage.equals("StartMenu")){
-                    g.drawImage(imageStartMenu, 0, 0,this.getWidth(), this.getHeight(),null );
+                    g.drawImage(imageStartMenu, 0, 0,this.getWidth(), this.getHeight(), 0, 0,imageStartMenu.getWidth(), imageStartMenu.getHeight(), null );
                 }
             }
             ButtonControl();
