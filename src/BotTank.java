@@ -23,6 +23,7 @@ public class BotTank extends GameObject {
     boolean typeOfEventA;
     boolean typeOfEventS;
     boolean typeOfEventD;
+    int SignmTank=1;
     Tank tank1;
 
     BotGun botGun;
@@ -47,7 +48,12 @@ public class BotTank extends GameObject {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(img, (int) (x - img.getWidth() * 0.5), (int) (y - img.getHeight() * 0.5), null);
         botGun.paint(g,x,y);
-        botGun.UpdatePlace();
+        if(VAngle>=0){
+            SignmTank=1;
+        }else {
+            SignmTank = -1;
+        }
+        botGun.UpdatePlace(SignmTank);
         g.setColor(new Color(239, 12, 12));
         g.drawString(Integer.toString((int)HitPoints),(int) x,(int) y-40);
     }

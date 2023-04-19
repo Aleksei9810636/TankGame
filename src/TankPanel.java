@@ -599,9 +599,10 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
         for (int i = 0; i < walls.size(); i++) {
             Wall wall = walls.get(i);
             if (P_tank1.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
+                double angleInRadians = Math.toRadians(UzeTank1.angle);
 
                 if (P_tank1.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy);
+                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy)*Math.cos(angleInRadians);
                 }
                 if (P_tank1.intersects(wall.x, wall.y, 1, wall.height)) {
                     this.UzeTank1.x -= Math.abs(this.UzeTank1.vy);
@@ -612,8 +613,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 if (P_tank1.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
                     this.UzeTank1.x += Math.abs(this.UzeTank1.vy);
                 }
-                g.setColor(new Color(55, 250, 31, 255));
-                g.fillRect(10, 10, 1200, 20);
+//                g.setColor(new Color(55, 250, 31, 255));   // индикатор пересечения
+//                g.fillRect(10, 10, 1200, 20);
             }
 
             for (int j = 0; j < BotTanks.size(); j++) {                                                               // пересечение ботиков со стенкой
@@ -658,8 +659,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                         this.UzeTank2.x += Math.abs(this.UzeTank2.vy);
                     }
                 }
-                g.setColor(new Color(55, 250, 31, 255));
-                g.fillRect(10, 10, 1200, 20);
+//                g.setColor(new Color(55, 250, 31, 255));
+//                g.fillRect(10, 10, 1200, 20);
             }
         }
     }

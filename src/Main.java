@@ -36,7 +36,7 @@ public class Main {
         int hor  = sSize.width-30;
 
         GameObject gameObject=new GameObject();  // вообщем то бесполезно
-        Tank tank1=new Tank(800,350, 2.5,  0.05, 900, 50, 1);
+        Tank tank1=new Tank(800,350, 3,  0.05, 900, 50, 100);
         Tank tank2=new Tank(800, 650, 2, 0.05, 900, 2500, 1);
         Gun gun=new Gun(1);
         KeyBoardGun keyBoardGun=new KeyBoardGun(0.7);

@@ -10,6 +10,7 @@ public class Gun extends  GameObject {
     double Angle=-90;
     double MouseAngle;
     double TankVAngle;
+    int SignmTank;
     BufferedImage image = ImageIO.read(new File("imgs\\TankGun.png"));
 
     public Gun(double AbcVAngle) throws IOException {
@@ -23,7 +24,7 @@ public class Gun extends  GameObject {
 
     }
 
-    public void UpdatePlace() {
+    public void UpdatePlace(int SignmTank) {
         VAngle+=TankVAngle;
         Angle+=VAngle;
         if (MouseAngle > Angle) {
@@ -40,12 +41,13 @@ public class Gun extends  GameObject {
                 VAngle = AbcVAngle;
             }
         }
-        if (Angle < 0) { // эти два ифа добавлены в связи с багом. если изначально мышь слево, то происходито баg
+        if (Angle < 0) {
             Angle += 360;
         }
         if (Angle > 360) {
             Angle -= 360;
         }
+        VAngle=AbcVAngle*SignmTank;
     }
 
 
