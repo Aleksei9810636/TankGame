@@ -24,7 +24,7 @@ public class Gun extends  GameObject {
 
     }
 
-    public void UpdatePlace(int SignmTank) {
+    public void UpdatePlace() {
         VAngle+=TankVAngle;
         Angle+=VAngle;
         if (MouseAngle > Angle) {
@@ -47,7 +47,6 @@ public class Gun extends  GameObject {
         if (Angle > 360) {
             Angle -= 360;
         }
-        VAngle=AbcVAngle*SignmTank;
     }
 
 

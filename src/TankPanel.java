@@ -545,7 +545,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             Tank2 = Tank2Del;
             MaxBotTank=0;
         }else{
-            MaxBotTank=3;
+            MaxBotTank=1;
         }
 
         walls = new ArrayList<>();
@@ -602,7 +602,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 double angleInRadians = Math.toRadians(UzeTank1.angle);
 
                 if (P_tank1.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy)*Math.cos(angleInRadians);
+                    this.UzeTank1.y += Math.abs(this.UzeTank1.vy);
                 }
                 if (P_tank1.intersects(wall.x, wall.y, 1, wall.height)) {
                     this.UzeTank1.x -= Math.abs(this.UzeTank1.vy);
@@ -623,16 +623,16 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 if (P_botTank.intersects(wall.x, wall.y, wall.width, wall.height)) {        //если пересекаются..
 
                     if (P_botTank.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
-                        this.BotTanks.get(j).y += Math.abs(this.UzeTank1.vy);
+                        this.BotTanks.get(j).y += Math.abs(this.BotTanks.get(j).vy);
                     }
                     if (P_botTank.intersects(wall.x, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x -= Math.abs(this.UzeTank1.vy);
+                        this.BotTanks.get(j).x -= Math.abs(this.BotTanks.get(j).vy);
                     }
                     if (P_botTank.intersects(wall.x, wall.y, wall.width, 1)) {
-                        this.BotTanks.get(j).y -= Math.abs(this.UzeTank1.vy);
+                        this.BotTanks.get(j).y -= Math.abs(this.BotTanks.get(j).vy);
                     }
                     if (P_botTank.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
-                        this.BotTanks.get(j).x += Math.abs(this.UzeTank1.vy);
+                        this.BotTanks.get(j).x += Math.abs(this.BotTanks.get(j).vy);
                     }
                 }
             }
@@ -951,7 +951,5 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
             //g.drawPolygon(ploika);
         }
-
-
     }
 

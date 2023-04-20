@@ -68,5 +68,6 @@ import java.io.IOException;
             if (Angle > 360) {
                 Angle -= 360;
             }
+//            VAngle=AbcVAngle* botTank.SignmTank;
         }
     }

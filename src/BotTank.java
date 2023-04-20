@@ -53,7 +53,7 @@ public class BotTank extends GameObject {
         }else {
             SignmTank = -1;
         }
-        botGun.UpdatePlace(SignmTank);
+        botGun.UpdatePlace();
         g.setColor(new Color(239, 12, 12));
         g.drawString(Integer.toString((int)HitPoints),(int) x,(int) y-40);
     }
