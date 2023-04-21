@@ -39,7 +39,7 @@ public class BotTank extends GameObject {
         RechargeTime = rechargeTime;
         this.image = image;
         this.tank1=tank1;
-        botGun=new BotGun(0.2,tank1, this);
+        botGun=new BotGun(1,tank1, this);
 
     }
 

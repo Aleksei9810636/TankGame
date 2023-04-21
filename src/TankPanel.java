@@ -80,7 +80,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
     void threadYest_probitie() {
         new Thread(() -> {
-            new MakeSound().playSound("music\\Yest_probitie.wav");
+//            new MakeSound().playSound("music\\Yest_probitie.wav");
             // threadYest_probitie.start();  вставь это туда, где должна заиграть музыка
             System.out.println("audio file finished!");
         }).start();
@@ -518,7 +518,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
     public void BotControl(Tank tank1, ArrayList<Wall> walls) throws IOException {
         if (time > 3000 && sumBotTank < MaxBotTank) {
             BufferedImage image = ImageIO.read(new File("imgs\\RedTank.jpg"));
-            BotTank botTank1 = new BotTank(350, 111 * sumBotTank + 100, 1, 0.05, 900, 2, image, tank1);
+            BotTank botTank1 = new BotTank(350, 111 * sumBotTank + 100, 4, 0.5, 900, 1, image, tank1);
             BotTanks.add(sumBotTank, botTank1);
 //            BotGun botGun1= new BotGun(0.2, UzeTank1, UzeTank2);
 //            BotGuns.add(sumBotTank, botGun1);
@@ -545,7 +545,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
             Tank2 = Tank2Del;
             MaxBotTank=0;
         }else{
-            MaxBotTank=1;
+            MaxBotTank=3;
         }
 
         walls = new ArrayList<>();
@@ -603,6 +603,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
 
                 if (P_tank1.intersects(wall.x, wall.y + wall.height, wall.width, 1)) {
                     this.UzeTank1.y += Math.abs(this.UzeTank1.vy);
+
                 }
                 if (P_tank1.intersects(wall.x, wall.y, 1, wall.height)) {
                     this.UzeTank1.x -= Math.abs(this.UzeTank1.vy);
@@ -613,8 +614,8 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 if (P_tank1.intersects(wall.x + wall.width, wall.y, 1, wall.height)) {
                     this.UzeTank1.x += Math.abs(this.UzeTank1.vy);
                 }
-//                g.setColor(new Color(55, 250, 31, 255));   // индикатор пересечения
-//                g.fillRect(10, 10, 1200, 20);
+                g.setColor(new Color(55, 250, 31, 255));   // индикатор пересечения
+                g.fillRect(10, 10, 1200, 20);
             }
 
             for (int j = 0; j < BotTanks.size(); j++) {                                                               // пересечение ботиков со стенкой
@@ -949,7 +950,7 @@ public class TankPanel extends JPanel implements KeyEventDispatcher, MouseListen
                 buttons.get(i).paint(g);
             }
 
-            //g.drawPolygon(ploika);
+            g.drawPolygon(ploika);
         }
     }
 

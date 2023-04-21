@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Gun extends  GameObject {
     double AbcVAngle;
     double VAngle;
-    double Angle=-90;
+    double Angle= 0;
     double MouseAngle;
     double TankVAngle;
     int SignmTank;

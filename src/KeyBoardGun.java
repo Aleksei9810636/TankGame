@@ -7,7 +7,7 @@ import java.io.IOException;
 public class KeyBoardGun extends GameObject {
 
         double VAngle;
-        double Angle=-90;
+        double Angle= 0;
         boolean typeOfEvent4;
         boolean typeOfEvent6;
         BufferedImage image= ImageIO.read(new File("imgs\\redGun.png"));

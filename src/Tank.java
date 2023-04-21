@@ -13,7 +13,7 @@ public class Tank extends GameObject {
     double vy;
     double VMax;
     double a;
-    double angle = -90;
+    double angle = 0;
     double HitPoints;
     double HitPointsMax;
     double RechargeTime;
